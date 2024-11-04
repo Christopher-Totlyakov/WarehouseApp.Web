@@ -1,4 +1,4 @@
-namespace WarehouseApp.Web.Models
+namespace WarehouseApp.Web.ViewModels
 {
     public class ErrorViewModel
     {
