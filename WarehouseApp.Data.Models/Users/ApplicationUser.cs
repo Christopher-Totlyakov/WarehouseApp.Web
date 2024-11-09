@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WarehouseApp.Data.Models
+namespace WarehouseApp.Data.Models.Users
 {
     public class ApplicationUser : IdentityUser<Guid>
     {

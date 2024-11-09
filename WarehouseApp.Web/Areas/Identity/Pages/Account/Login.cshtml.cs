@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using WarehouseApp.Data.Models;
+using WarehouseApp.Data.Models.Users;
 
 namespace WarehouseApp.Web.Areas.Identity.Pages.Account
 {

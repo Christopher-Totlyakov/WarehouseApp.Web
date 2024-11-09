@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WarehouseApp.Common\WarehouseApp.Common.csproj" />
     <ProjectReference Include="..\WarehouseApp.Data\WarehouseApp.Data.csproj" />
     <ProjectReference Include="..\WarehouseApp.Web.ViewModels\WarehouseApp.Web.ViewModels.csproj" />
   </ItemGroup>

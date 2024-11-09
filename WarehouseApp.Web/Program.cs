@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WarehouseApp.Data;
-using WarehouseApp.Data.Models;
+using WarehouseApp.Data.Models.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
