@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WarehouseApp.Data.Models.Interfaces;
+using static WarehouseApp.Common.EntityValidationConstants.Users;
 
 namespace WarehouseApp.Data.Models.Users
 {
@@ -13,28 +14,34 @@ namespace WarehouseApp.Data.Models.Users
     {
         [Required]
         [PersonalData]
+        [MaxLength(CompanyNameMaxLength)]
         public string CompanyName { get; set; } = null!;
 
         [Required]
         [PersonalData]
+        [MaxLength(TaxNumberMaxLength)]
         public string TaxNumber { get; set; } = null!;
 
 
         [Required]
         [PersonalData]
+        [MaxLength(MOLMaxLength)]
         public string MOL { get; set; } = null!;
 
         [Required]
         [PersonalData]
+        [MaxLength(EmailMaxLength)]
         public string CompanyEmail { get; set;} = null!;
 
 
         [Required]
         [PersonalData]
+        [MaxLength(PhoneMaxLength)]
         public string CompanyPhoneNumber { get; set; } = null!;
 
         [Required]
         [PersonalData]
+        [MaxLength(AddressMaxLength)]
         public string BusinessAddress { get; set; } = null!;
 
         [PersonalData]
@@ -42,6 +49,7 @@ namespace WarehouseApp.Data.Models.Users
         
         [Required]
         [PersonalData]
+        [Range(DiscountRateMin,DiscountRateMax)]
         public decimal DiscountRate { get; set; }
 
 

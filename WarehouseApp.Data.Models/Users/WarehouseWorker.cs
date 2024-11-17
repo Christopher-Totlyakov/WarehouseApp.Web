@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static WarehouseApp.Common.EntityValidationConstants.Users;
 
 namespace WarehouseApp.Data.Models.Users
 {
@@ -12,10 +13,12 @@ namespace WarehouseApp.Data.Models.Users
     {
         [Required]
         [PersonalData]
+        [MaxLength(NameMaxLength)]
         public string FirstName { get; set; } = null!;
 
         [Required]
         [PersonalData]
+        [MaxLength(NameMaxLength)]
         public string LastName { get; set; } = null!;
 
         [Required]

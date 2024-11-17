@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,16 +12,15 @@ namespace WarehouseApp.Data.Models
     public class ProductCategory
     {
         [Required]
+        [Comment("Product Identifier")]
         public int ProductId { get; set; }
-
-        
+                
         public Product Product { get; set; } = null!;
 
         [Required]
+        [Comment("Category Identifier")]
         public int CategoryId { get; set; }
-
-        
+                
         public Category Category { get; set; } = null!;
-
     }
 }
