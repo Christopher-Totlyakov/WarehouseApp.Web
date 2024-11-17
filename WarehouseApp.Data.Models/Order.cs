@@ -34,6 +34,5 @@ namespace WarehouseApp.Data.Models
 
         public ICollection<OrderProduct> OrderProducts { get; set; } = new HashSet<OrderProduct>();
 
-        public ICollection<SupplierOrder> SupplierOrder { get; set; } = new HashSet<SupplierOrder>();
     }
 }

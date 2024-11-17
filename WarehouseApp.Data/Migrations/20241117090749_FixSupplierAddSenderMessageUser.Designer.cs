@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WarehouseApp.Data;
 
@@ -11,9 +12,11 @@ using WarehouseApp.Data;
 namespace WarehouseApp.Data.Migrations
 {
     [DbContext(typeof(WarehouseDbContext))]
-    partial class WarehouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241117090749_FixDistributor")]
+    partial class FixDistributor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -427,6 +430,21 @@ namespace WarehouseApp.Data.Migrations
                     b.ToTable("SaleProducts");
                 });
 
+            modelBuilder.Entity("WarehouseApp.Data.Models.SupplierOrder", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("SupplierId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("OrderId", "SupplierId");
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("SupplierOrders");
+                });
+
             modelBuilder.Entity("WarehouseApp.Data.Models.Users.ApplicationUser", b =>
                 {
                     b.Property<Guid>("Id")
@@ -815,6 +833,25 @@ namespace WarehouseApp.Data.Migrations
                     b.Navigation("Sale");
                 });
 
+            modelBuilder.Entity("WarehouseApp.Data.Models.SupplierOrder", b =>
+                {
+                    b.HasOne("WarehouseApp.Data.Models.Order", "Order")
+                        .WithMany("SupplierOrder")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("WarehouseApp.Data.Models.Users.Supplier", "Supplier")
+                        .WithMany()
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Supplier");
+                });
+
             modelBuilder.Entity("WarehouseApp.Data.Models.Users.SenderMessageUser", b =>
                 {
                     b.HasOne("WarehouseApp.Data.Models.Users.ApplicationUser", null)
@@ -894,6 +931,8 @@ namespace WarehouseApp.Data.Migrations
                     b.Navigation("OrderProducts");
 
                     b.Navigation("Supplier");
+
+                    b.Navigation("SupplierOrder");
                 });
 
             modelBuilder.Entity("WarehouseApp.Data.Models.Product", b =>

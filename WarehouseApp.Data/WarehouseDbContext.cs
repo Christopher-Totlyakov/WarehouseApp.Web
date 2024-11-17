@@ -31,12 +31,19 @@ namespace WarehouseApp.Data
         DbSet<RequestProduct> RequestProducts { get; set; } = null!;
         DbSet<Sale> Sales { get; set; } = null!;
         DbSet<SaleProduct> SaleProducts { get; set; } = null!;
-        DbSet<SupplierOrder> SupplierOrders { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            modelBuilder.Entity<Distributor>().ToTable("Distributors");
+            modelBuilder.Entity<Customer>().ToTable("Customers");
+            modelBuilder.Entity<Supplier>().ToTable("Suppliers");
+            modelBuilder.Entity<WarehouseWorker>().ToTable("WarehouseWorkers");
+
+            // Основната таблица за общите данни
+            modelBuilder.Entity<ApplicationUser>().ToTable("AspNetUsers");
 
         }
     }

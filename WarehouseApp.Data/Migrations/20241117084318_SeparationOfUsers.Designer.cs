@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WarehouseApp.Data;
 
@@ -11,9 +12,11 @@ using WarehouseApp.Data;
 namespace WarehouseApp.Data.Migrations
 {
     [DbContext(typeof(WarehouseDbContext))]
-    partial class WarehouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241117084318_SeparationOfUsers")]
+    partial class SeparationOfUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -427,6 +430,21 @@ namespace WarehouseApp.Data.Migrations
                     b.ToTable("SaleProducts");
                 });
 
+            modelBuilder.Entity("WarehouseApp.Data.Models.SupplierOrder", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("SupplierId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("OrderId", "SupplierId");
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("SupplierOrders");
+                });
+
             modelBuilder.Entity("WarehouseApp.Data.Models.Users.ApplicationUser", b =>
                 {
                     b.Property<Guid>("Id")
@@ -502,6 +520,30 @@ namespace WarehouseApp.Data.Migrations
                     b.ToTable("SenderMessageUser");
                 });
 
+            modelBuilder.Entity("WarehouseApp.Data.Models.Users.Supplier", b =>
+                {
+                    b.HasBaseType("WarehouseApp.Data.Models.Users.ApplicationUser");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PreferredDeliveryMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SupplierId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("factoryLocation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("Suppliers", (string)null);
+                });
+
             modelBuilder.Entity("WarehouseApp.Data.Models.Users.WarehouseWorker", b =>
                 {
                     b.HasBaseType("WarehouseApp.Data.Models.Users.ApplicationUser");
@@ -533,30 +575,6 @@ namespace WarehouseApp.Data.Migrations
                     b.HasBaseType("WarehouseApp.Data.Models.Users.SenderMessageUser");
 
                     b.ToTable("RequesterAndBuyerUser");
-                });
-
-            modelBuilder.Entity("WarehouseApp.Data.Models.Users.Supplier", b =>
-                {
-                    b.HasBaseType("WarehouseApp.Data.Models.Users.SenderMessageUser");
-
-                    b.Property<string>("CompanyName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PreferredDeliveryMethod")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("SupplierId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("factoryLocation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("SupplierId");
-
-                    b.ToTable("Suppliers", (string)null);
                 });
 
             modelBuilder.Entity("WarehouseApp.Data.Models.Users.Customer", b =>
@@ -815,6 +833,25 @@ namespace WarehouseApp.Data.Migrations
                     b.Navigation("Sale");
                 });
 
+            modelBuilder.Entity("WarehouseApp.Data.Models.SupplierOrder", b =>
+                {
+                    b.HasOne("WarehouseApp.Data.Models.Order", "Order")
+                        .WithMany("SupplierOrder")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("WarehouseApp.Data.Models.Users.Supplier", "Supplier")
+                        .WithMany()
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Supplier");
+                });
+
             modelBuilder.Entity("WarehouseApp.Data.Models.Users.SenderMessageUser", b =>
                 {
                     b.HasOne("WarehouseApp.Data.Models.Users.ApplicationUser", null)
@@ -822,6 +859,19 @@ namespace WarehouseApp.Data.Migrations
                         .HasForeignKey("WarehouseApp.Data.Models.Users.SenderMessageUser", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WarehouseApp.Data.Models.Users.Supplier", b =>
+                {
+                    b.HasOne("WarehouseApp.Data.Models.Users.ApplicationUser", null)
+                        .WithOne()
+                        .HasForeignKey("WarehouseApp.Data.Models.Users.Supplier", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WarehouseApp.Data.Models.Order", null)
+                        .WithMany("Supplier")
+                        .HasForeignKey("SupplierId");
                 });
 
             modelBuilder.Entity("WarehouseApp.Data.Models.Users.WarehouseWorker", b =>
@@ -844,19 +894,6 @@ namespace WarehouseApp.Data.Migrations
                         .HasForeignKey("WarehouseApp.Data.Models.Users.RequesterAndBuyerUser", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("WarehouseApp.Data.Models.Users.Supplier", b =>
-                {
-                    b.HasOne("WarehouseApp.Data.Models.Users.SenderMessageUser", null)
-                        .WithOne()
-                        .HasForeignKey("WarehouseApp.Data.Models.Users.Supplier", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WarehouseApp.Data.Models.Order", null)
-                        .WithMany("Supplier")
-                        .HasForeignKey("SupplierId");
                 });
 
             modelBuilder.Entity("WarehouseApp.Data.Models.Users.Customer", b =>
@@ -894,6 +931,8 @@ namespace WarehouseApp.Data.Migrations
                     b.Navigation("OrderProducts");
 
                     b.Navigation("Supplier");
+
+                    b.Navigation("SupplierOrder");
                 });
 
             modelBuilder.Entity("WarehouseApp.Data.Models.Product", b =>
