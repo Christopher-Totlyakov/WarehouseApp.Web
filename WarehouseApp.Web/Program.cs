@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WarehouseApp.Data;
 using WarehouseApp.Data.Models.Users;
+using WarehouseApp.Services.Mapping;
+using WarehouseApp.Web.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +42,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
+
+AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -20,17 +20,17 @@ namespace WarehouseApp.Data
 
         }
 
-        DbSet<Category> Categories { get; set; } = null!;
-        DbSet<Message> Messages { get; set; } = null!;
-        DbSet<MessagesForWarehouseWorker> MessagesForWarehouseWorkers { get; set; } = null!;
-        DbSet<Order> Orders { get; set; } = null!;
-        DbSet<OrderProduct> OrderProducts { get; set; } = null!;
-        DbSet<Product> Products { get; set; } = null!;
-        DbSet<ProductCategory> ProductCategories { get; set; } = null!;
-        DbSet<Request> Requests { get; set; } = null!;
-        DbSet<RequestProduct> RequestProducts { get; set; } = null!;
-        DbSet<Sale> Sales { get; set; } = null!;
-        DbSet<SaleProduct> SaleProducts { get; set; } = null!;
+        public virtual DbSet<Category> Categories { get; set; } = null!;
+        public virtual DbSet<Message> Messages { get; set; } = null!;
+        public virtual DbSet<MessagesForWarehouseWorker> MessagesForWarehouseWorkers { get; set; } = null!;
+        public virtual DbSet<Order> Orders { get; set; } = null!;
+        public virtual DbSet<OrderProduct> OrderProducts { get; set; } = null!;
+        public virtual DbSet<Product> Products { get; set; } = null!;
+        public virtual DbSet<ProductCategory> ProductCategories { get; set; } = null!;
+        public virtual DbSet<Request> Requests { get; set; } = null!;
+        public virtual DbSet<RequestProduct> RequestProducts { get; set; } = null!;
+        public virtual DbSet<Sale> Sales { get; set; } = null!;
+        public virtual DbSet<SaleProduct> SaleProducts { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -3,19 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseApp.Web", "WarehouseApp.Web\WarehouseApp.Web.csproj", "{1A4A223C-0524-48B8-B377-641E7837BFD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarehouseApp.Web", "WarehouseApp.Web\WarehouseApp.Web.csproj", "{1A4A223C-0524-48B8-B377-641E7837BFD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseApp.Web.ViewModels", "WarehouseApp.Web.ViewModels\WarehouseApp.Web.ViewModels.csproj", "{B1A71A0C-A6AA-41E0-BFDA-A6D9C529FBFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarehouseApp.Web.ViewModels", "WarehouseApp.Web.ViewModels\WarehouseApp.Web.ViewModels.csproj", "{B1A71A0C-A6AA-41E0-BFDA-A6D9C529FBFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseApp.Common", "WarehouseApp.Common\WarehouseApp.Common.csproj", "{C23E5D5D-92C7-4EA2-A1EC-1BDA831E92EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarehouseApp.Common", "WarehouseApp.Common\WarehouseApp.Common.csproj", "{C23E5D5D-92C7-4EA2-A1EC-1BDA831E92EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseApp.Data.Models", "WarehouseApp.Data.Models\WarehouseApp.Data.Models.csproj", "{C1B97385-245D-4319-86C6-A557045B3327}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarehouseApp.Data.Models", "WarehouseApp.Data.Models\WarehouseApp.Data.Models.csproj", "{C1B97385-245D-4319-86C6-A557045B3327}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{29A88494-4D49-4D8C-979E-6A4C4CF0F321}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{8495FC36-8F95-425F-AADB-8959EF941D85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseApp.Data", "WarehouseApp.Data\WarehouseApp.Data.csproj", "{8B861A2C-B3F5-4E0D-B7F9-DF99B307657A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarehouseApp.Data", "WarehouseApp.Data\WarehouseApp.Data.csproj", "{8B861A2C-B3F5-4E0D-B7F9-DF99B307657A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{68DEE623-764A-40A2-9352-1BCF2C732DAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseApp.Services.Data", "WarehouseApp.Services.Data\WarehouseApp.Services.Data.csproj", "{6C8E1096-14B4-4AB2-AC06-7B19B38BA1A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseApp.Services.Mapping", "WarehouseApp.Services.Mapping\WarehouseApp.Services.Mapping.csproj", "{FC1DAF4E-AB40-4ED4-A910-7C4C60BA80AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +49,14 @@ Global
 		{8B861A2C-B3F5-4E0D-B7F9-DF99B307657A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B861A2C-B3F5-4E0D-B7F9-DF99B307657A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B861A2C-B3F5-4E0D-B7F9-DF99B307657A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C8E1096-14B4-4AB2-AC06-7B19B38BA1A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C8E1096-14B4-4AB2-AC06-7B19B38BA1A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C8E1096-14B4-4AB2-AC06-7B19B38BA1A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C8E1096-14B4-4AB2-AC06-7B19B38BA1A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC1DAF4E-AB40-4ED4-A910-7C4C60BA80AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC1DAF4E-AB40-4ED4-A910-7C4C60BA80AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC1DAF4E-AB40-4ED4-A910-7C4C60BA80AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC1DAF4E-AB40-4ED4-A910-7C4C60BA80AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +66,8 @@ Global
 		{B1A71A0C-A6AA-41E0-BFDA-A6D9C529FBFD} = {8495FC36-8F95-425F-AADB-8959EF941D85}
 		{C1B97385-245D-4319-86C6-A557045B3327} = {29A88494-4D49-4D8C-979E-6A4C4CF0F321}
 		{8B861A2C-B3F5-4E0D-B7F9-DF99B307657A} = {29A88494-4D49-4D8C-979E-6A4C4CF0F321}
+		{6C8E1096-14B4-4AB2-AC06-7B19B38BA1A6} = {68DEE623-764A-40A2-9352-1BCF2C732DAF}
+		{FC1DAF4E-AB40-4ED4-A910-7C4C60BA80AD} = {68DEE623-764A-40A2-9352-1BCF2C732DAF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CCF28CF-559D-42B0-B316-582D099C2BF2}
