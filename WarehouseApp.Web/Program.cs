@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Core.Types;
 using WarehouseApp.Data;
 using WarehouseApp.Data.Models.Users;
 using WarehouseApp.Services.Mapping;
@@ -35,15 +36,14 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
     .AddSignInManager<SignInManager<ApplicationUser>>()
     .AddUserManager<UserManager<ApplicationUser>>()
     .AddDefaultTokenProviders();//
-    
-    
+
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
+AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly );
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
