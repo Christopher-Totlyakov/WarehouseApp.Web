@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging.Signing;
 using NuGet.Protocol.Core.Types;
 using WarehouseApp.Data;
 using WarehouseApp.Data.Models.Users;
 using WarehouseApp.Services.Mapping;
 using WarehouseApp.Web.ViewModels;
+using WarehouseApp.Data;
+using WarehouseApp.Data.Repository.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +40,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
     .AddUserManager<UserManager<ApplicationUser>>()
     .AddDefaultTokenProviders();//
 
+builder.Services.AddScoped<IRepository, WarehouseApp.Data.Repository.Repository>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

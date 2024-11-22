@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WarehouseApp.Data.Repository.Interfaces
 {
-    internal interface IRepository 
+    public interface IRepository 
     {
         TType? GetById<TType, TId>(TId id) where TType : class;
 

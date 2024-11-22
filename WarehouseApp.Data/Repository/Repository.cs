@@ -10,7 +10,7 @@ using WarehouseApp.Data.Repository.Interfaces;
 
 namespace WarehouseApp.Data.Repository
 {
-    internal class Repository : IRepository
+    public class Repository : IRepository
     {
 
         private readonly WarehouseDbContext dbContext;
