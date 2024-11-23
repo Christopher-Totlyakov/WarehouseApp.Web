@@ -1,0 +1,37 @@
+﻿@using WarehouseApp.Web.ViewModels.Product
+@model ProductDetailsViewModel
+
+
+<div class="container mt-4">
+	<div class="card">
+		<div class="row g-0">
+			<div class="col-md-4">
+				@if (!string.IsNullOrEmpty(Model.ImagePath))
+				{
+					<img src="@Model.ImagePath" class="img-fluid rounded-start" alt="@Model.Name">
+				}
+				else
+				{
+					<img src="/images/default-product.png" class="img-fluid rounded-start" alt="Default Product">
+				}
+			</div>
+			<div class="col-md-8">
+				<div class="card-body">
+					<h3 class="card-title">@Model.Name</h3>
+					<p class="card-text">@Model.Description</p>
+					<h5 class="text-success">Price: @Model.Price.ToString("C")</h5>
+					<p>In Stock: <strong>@Model.StockQuantity</strong></p>
+					<p>Categories:</p>
+					<ul class="list-group list-group-flush">
+						@foreach (var category in Model.Categories)
+						{
+							<li class="list-group-item">@category</li>
+						}
+					</ul>
+					<a href="/Products/Buy/@Model.Id" class="btn btn-primary mt-3">Buy Now</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WarehouseApp.Data.Models;
 using WarehouseApp.Data.Repository.Interfaces;
 using WarehouseApp.Services.Data.Interfaces;
+using WarehouseApp.Services.Mapping;
 using WarehouseApp.Web.ViewModels.Product;
 
 namespace WarehouseApp.Services.Data
@@ -29,26 +30,32 @@ namespace WarehouseApp.Services.Data
         {
             IEnumerable<ProductIndexViewModel> productViewModel = await repository
                 .GetAllAttached<Product>()
-                .Include(p => p.ProductCategories)
-                    .ThenInclude(pc => pc.Category)
-                .Select(p => new ProductIndexViewModel
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    ImagePath = p.ImagePath,
-                    Description = p.Description,
-                    Price = p.Price,
-                    StockQuantity = p.StockQuantity,
-                    Categories = p.ProductCategories.Select(pc => pc.Category.Name).ToList()
-                })
+                .To<ProductIndexViewModel>()
                 .ToArrayAsync();
 
             return productViewModel;
         }
 
-        public Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(Guid id)
+        public async Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(int id)
         {
-            throw new NotImplementedException();
-        }
+            ProductDetailsViewModel? productViewModel = await repository
+               .GetAllAttached<Product>()
+               .Include(p => p.ProductCategories)
+                   .ThenInclude(pc => pc.Category)
+                   .Select(p => new ProductDetailsViewModel
+				   {
+					   Id = p.Id,
+					   Name = p.Name,
+					   ImagePath = p.ImagePath,
+					   Description = p.Description,
+					   Price = p.Price,
+					   StockQuantity = p.StockQuantity,
+					   Categories = p.ProductCategories.Select(pc => pc.Category.Name).ToList()
+				   })
+				   .FirstOrDefaultAsync(c => c.Id == id);
+			   
+
+			return productViewModel;
+		}
     }
 }

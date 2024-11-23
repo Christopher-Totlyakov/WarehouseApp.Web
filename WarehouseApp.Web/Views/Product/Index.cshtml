@@ -12,20 +12,11 @@
                          alt="@product.Name">
                     <div class="card-body">
                         <h5 class="card-title">@product.Name</h5>
-                        <p class="card-text text-truncate">@product.Description</p>
                         <h6 class="text-success">Price: @product.Price.ToString("C")</h6>
-                        <p>In Stock: <strong>@product.StockQuantity</strong></p>
-                        <p>Categories:</p>
-                        <ul class="list-group list-group-flush">
-                            @foreach (var category in product.Categories)
-                            {
-                                <li class="list-group-item">@category</li>
-                            }
-                        </ul>
                     </div>
                     <div class="card-footer text-center">
-                        <a href="/Products/Details/@product.Id" class="btn btn-primary">View Details</a>
-                        <a href="/Products/Buy/@product.Id" class="btn btn-success">Buy Now</a>
+                        <a href="/Product/Details/@product.Id" class="btn btn-primary">View Details</a>
+                        <a href="/Product/Buy/@product.Id" class="btn btn-success">Buy Now</a>
                     </div>
                 </div>
             </div>

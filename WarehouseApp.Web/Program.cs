@@ -7,7 +7,6 @@ using WarehouseApp.Data;
 using WarehouseApp.Data.Models.Users;
 using WarehouseApp.Services.Mapping;
 using WarehouseApp.Web.ViewModels;
-using WarehouseApp.Data;
 using WarehouseApp.Data.Repository.Interfaces;
 using WarehouseApp.Services.Data.Interfaces;
 using WarehouseApp.Services.Data;

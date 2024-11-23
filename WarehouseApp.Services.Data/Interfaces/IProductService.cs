@@ -14,6 +14,6 @@ namespace WarehouseApp.Services.Data.Interfaces
 
         Task AddProductAsync(AddProductFormModel product);
 
-        Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(Guid id);
+        Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(int id);
     }
 }

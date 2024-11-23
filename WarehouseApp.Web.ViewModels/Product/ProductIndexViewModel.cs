@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WarehouseApp.Services.Mapping;
 
 namespace WarehouseApp.Web.ViewModels.Product
 {
-    public class ProductIndexViewModel
+    public class ProductIndexViewModel : IMapFrom<Data.Models.Product>
     {
         public int Id { get; set; }
 
@@ -15,12 +16,6 @@ namespace WarehouseApp.Web.ViewModels.Product
 
         public string? ImagePath { get; set; }
 
-        public string Description { get; set; } = null!;
-
         public decimal Price { get; set; }
-
-        public uint StockQuantity { get; set; }
-
-        public IEnumerable<string> Categories { get; set; } = new List<string>();
     }
 }

@@ -13,6 +13,7 @@ namespace WarehouseApp.Web.Controllers
             productService = _productService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             IEnumerable<ProductIndexViewModel> products =
@@ -20,5 +21,16 @@ namespace WarehouseApp.Web.Controllers
 
             return View(products);
         }
+
+        [HttpGet]
+		public async Task<IActionResult> Details(int id)
+		{
+			ProductDetailsViewModel products =
+			   await productService.GetProductDetailsByIdAsync(id);
+
+			return View(products);
+		}
+
+       
     }
 }
