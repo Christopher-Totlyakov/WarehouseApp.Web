@@ -17,7 +17,7 @@ namespace WarehouseApp.Data.Repository.Interfaces
 
         Task<IEnumerable<TType>> GetAllAsync<TType>() where TType : class;
 
-        IEnumerable<TType> GetAllAttached<TType>() where TType : class;
+        IQueryable<TType> GetAllAttached<TType>() where TType : class;
 
         void Add<TType>(TType item) where TType : class;
 

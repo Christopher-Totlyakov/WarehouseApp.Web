@@ -47,7 +47,7 @@ namespace WarehouseApp.Data.Repository
             return await DbSet<TType>().ToArrayAsync();
         }
 
-        public IEnumerable<TType> GetAllAttached<TType>() where TType : class
+        public IQueryable<TType> GetAllAttached<TType>() where TType : class
         {
             return DbSet<TType>();//asQueryable
         }

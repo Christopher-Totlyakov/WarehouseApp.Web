@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\WarehouseApp.Common\WarehouseApp.Common.csproj" />
     <ProjectReference Include="..\WarehouseApp.Data\WarehouseApp.Data.csproj" />
+    <ProjectReference Include="..\WarehouseApp.Services.Data\WarehouseApp.Services.Data.csproj" />
     <ProjectReference Include="..\WarehouseApp.Services.Mapping\WarehouseApp.Services.Mapping.csproj" />
     <ProjectReference Include="..\WarehouseApp.Web.ViewModels\WarehouseApp.Web.ViewModels.csproj" />
   </ItemGroup>

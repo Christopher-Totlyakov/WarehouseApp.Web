@@ -9,6 +9,8 @@ using WarehouseApp.Services.Mapping;
 using WarehouseApp.Web.ViewModels;
 using WarehouseApp.Data;
 using WarehouseApp.Data.Repository.Interfaces;
+using WarehouseApp.Services.Data.Interfaces;
+using WarehouseApp.Services.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +43,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
     .AddDefaultTokenProviders();//
 
 builder.Services.AddScoped<IRepository, WarehouseApp.Data.Repository.Repository>();
+
+builder.Services.AddScoped<IProductService, ProductService>();
+
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
