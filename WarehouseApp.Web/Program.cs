@@ -41,9 +41,20 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
     .AddUserManager<UserManager<ApplicationUser>>()
     .AddDefaultTokenProviders();//
 
+builder.Services.AddDistributedMemoryCache(); 
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); 
+    options.Cookie.HttpOnly = true; 
+    options.Cookie.IsEssential = true; 
+});
+
+
 builder.Services.AddScoped<IRepository, WarehouseApp.Data.Repository.Repository>();
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
 
 
 builder.Services.AddControllersWithViews();
@@ -72,6 +83,7 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

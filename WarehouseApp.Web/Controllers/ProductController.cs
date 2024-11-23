@@ -30,7 +30,5 @@ namespace WarehouseApp.Web.Controllers
 
 			return View(products);
 		}
-
-       
     }
 }
