@@ -18,10 +18,15 @@ namespace WarehouseApp.Web.ViewModels.ShoppingCart
 
         public int Quantity { get; set; }
 
+        public bool InStok { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Data.Models.Product, ShoppingCartItems>()
                 .ForMember(p => p.Quantity, x => x.Ignore());
+
+            configuration.CreateMap<ShoppingCartItems, ShoppingCartItems>();
+
         }
     }
 }

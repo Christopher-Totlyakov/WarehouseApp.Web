@@ -32,15 +32,24 @@ namespace WarehouseApp.Services.Data
 
             var productIds = items.Select(item => item.ProductId).ToList();
 
-            var products = await repository.GetAllAttached<Product>()
-            .Where(p => productIds.Contains(p.Id))
-            .To<ShoppingCartItems>()
-            .ToListAsync();
-            foreach (var product in products)
+            var products = await repository.GetAllAttached<WarehouseApp.Data.Models.Product>()
+                    .Where(p => productIds.Contains(p.Id))
+                    .ToListAsync();
+
+            var shoppingCartItems = products.Select(p =>
             {
-                product.Quantity = items.FirstOrDefault(c => c.ProductId == product.Id).Quantity;
-            }
-            return products;
+                var cartItem = items.FirstOrDefault(i => i.ProductId == p.Id);
+                return new ShoppingCartItems
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    Quantity = cartItem?.Quantity ?? 0,
+                    InStok = p.StockQuantity >= (cartItem?.Quantity ?? 0)
+                };
+            }).ToList();
+
+            return shoppingCartItems;
         }
 
         public List<AddToCartViewModel> AddProductsInCooke(AddToCartViewModel model, string cartCookie)
@@ -98,7 +107,7 @@ namespace WarehouseApp.Services.Data
             {
                 existingItem.Quantity = model.Quantity;
             }
-            
+
             return cart;
         }
     }
