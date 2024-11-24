@@ -1,0 +1,56 @@
+﻿@using WarehouseApp.Web.ViewModels.Message
+@model IEnumerable<MessageViewModel>
+
+<div class="container mt-4">
+	<h2>Messages</h2>
+	@if (!Model.Any())
+	{
+		<p>No messages available.</p>
+	}
+	else
+	{
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Sender</th>
+					<th>Receiver</th>
+					<th>Type</th>
+					<th>Date</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var message in Model)
+				{
+					<tr>
+						<td>@message.MessageId</td>
+						<td>@message.SenderEmail</td>
+						<td>@(string.IsNullOrEmpty(message.ReceiverName) ? "Not assigned" : message.ReceiverName)</td>
+						<td>@message.MessageType</td>
+						<td>@message.SentDate.ToString("yyyy-MM-dd HH:mm")</td>
+						<td>@message.Status</td>
+						<td>
+							<a asp-action="ReadMessage" asp-route-id="@message.MessageId" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#messageModal">Read</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
+</div>
+
+<!-- Placeholder for modal -->
+<div id="messageModal" class="modal fade" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-body">
+				Loading...
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+    <script src="~/js/MassageReadAJAX.js"></script>
+}

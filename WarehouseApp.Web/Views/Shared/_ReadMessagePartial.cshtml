@@ -1,0 +1,18 @@
+﻿@using WarehouseApp.Web.ViewModels.Message
+@model MessageViewModel
+
+<div class="modal-header">
+    <h5 class="modal-title">Message Details</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <p><strong>Sender:</strong> @Model.SenderEmail</p>
+    <p><strong>Receiver:</strong> @Model.ReceiverName</p>
+    <p><strong>Type:</strong> @Model.MessageType</p>
+    <p><strong>Content:</strong> @Model.MessageContent</p>
+    <p><strong>Date Sent:</strong> @Model.SentDate.ToString("yyyy-MM-dd HH:mm")</p>
+    <p><strong>Status:</strong> @Model.Status</p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+</div>
