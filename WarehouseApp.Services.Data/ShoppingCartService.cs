@@ -43,7 +43,7 @@ namespace WarehouseApp.Services.Data
             return products;
         }
 
-        public List<AddToCartViewModel> SetProductsInCooke(AddToCartViewModel model, string cartCookie)
+        public List<AddToCartViewModel> AddProductsInCooke(AddToCartViewModel model, string cartCookie)
         {
             var cart = cartCookie != null
                 ? JsonSerializer.Deserialize<List<AddToCartViewModel>>(cartCookie)
@@ -61,7 +61,7 @@ namespace WarehouseApp.Services.Data
             }
 
             return cart;
-           
+
         }
 
         public List<AddToCartViewModel> RemoveProductFromCart(string cartCookie, int id)
@@ -72,6 +72,33 @@ namespace WarehouseApp.Services.Data
 
             cart = cart.Where(item => item.ProductId != id).ToList();
 
+            return cart;
+        }
+
+        public AddToCartViewModel? GetSelectedItemFromCart(string cartCookie, int id)
+        {
+            var cart = cartCookie != null
+                ? JsonSerializer.Deserialize<List<AddToCartViewModel>>(cartCookie)
+                : new List<AddToCartViewModel>();
+
+            AddToCartViewModel? model = cart.FirstOrDefault(item => item.ProductId == id);
+
+            return model;
+        }
+
+        public List<AddToCartViewModel> SetEditItemInCart(string cartCookie, AddToCartViewModel model)
+        {
+            var cart = cartCookie != null
+               ? JsonSerializer.Deserialize<List<AddToCartViewModel>>(cartCookie)
+               : new List<AddToCartViewModel>();
+
+
+            var existingItem = cart.FirstOrDefault(x => x.ProductId == model.ProductId);
+            if (existingItem != null)
+            {
+                existingItem.Quantity = model.Quantity;
+            }
+            
             return cart;
         }
     }

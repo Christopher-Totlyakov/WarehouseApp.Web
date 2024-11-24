@@ -10,7 +10,7 @@
                 <h5 class="modal-title">Add to Cart</h5>
                 <button type="button" class="btn-close" onclick="window.history.back()" aria-label="Close"></button>
             </div>
-            <form asp-action="AddToCart" method="post">
+            <form asp-action="EditCartItem" method="post">
                 <div class="modal-body">
                     <input type="hidden" name="ProductId" value="@Model.ProductId" />
                     <div class="mb-3">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                    <button type="submit" class="btn btn-primary">Ready</button>
                     <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
                 </div>
             </form>

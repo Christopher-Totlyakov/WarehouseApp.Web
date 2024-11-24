@@ -12,9 +12,13 @@ namespace WarehouseApp.Services.Data.Interfaces
     {
         Task<IEnumerable<ShoppingCartItems>> GetChoiceProductsAsync(string cartCookie);
 
-        List<AddToCartViewModel> SetProductsInCooke(AddToCartViewModel model, string cartCookie);
+        List<AddToCartViewModel> AddProductsInCooke(AddToCartViewModel model, string cartCookie);
 
         List<AddToCartViewModel> RemoveProductFromCart(string cartCookie, int id);
+
+        AddToCartViewModel? GetSelectedItemFromCart(string cartCookie, int id);
+
+        List<AddToCartViewModel> SetEditItemInCart(string cartCookie, AddToCartViewModel model);
 
     }
 }
