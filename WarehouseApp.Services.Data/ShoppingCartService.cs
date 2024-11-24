@@ -63,5 +63,16 @@ namespace WarehouseApp.Services.Data
             return cart;
            
         }
+
+        public List<AddToCartViewModel> RemoveProductFromCart(string cartCookie, int id)
+        {
+            var cart = cartCookie != null
+                ? JsonSerializer.Deserialize<List<AddToCartViewModel>>(cartCookie)
+                : new List<AddToCartViewModel>();
+
+            cart = cart.Where(item => item.ProductId != id).ToList();
+
+            return cart;
+        }
     }
 }

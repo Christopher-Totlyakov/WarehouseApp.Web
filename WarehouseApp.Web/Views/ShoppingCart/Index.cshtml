@@ -16,6 +16,7 @@
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Total</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +27,21 @@
                         <td>@item.Price.ToString("C")</td>
                         <td>@item.Quantity</td>
                         <td>@((item.Price * item.Quantity).ToString("C"))</td>
+                        <td>
+                            <form asp-action="EditCartItem" asp-controller="ShoppingCart" method="get" style="display: inline;">
+                                <input type="hidden" name="Id" value="@item.Id" />
+                                <button type="submit" class="btn btn-warning btn-sm">
+                                    <i class="bi bi-pencil"></i> Edit
+                                </button>
+                            </form>
+
+                            <form asp-action="RemoveFromCart" asp-controller="ShoppingCart" method="post" style="display: inline;">
+                                <input type="hidden" name="Id" value="@item.Id" />
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="bi bi-trash"></i> Remove
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -34,8 +50,5 @@
             Total:
             @Model.Sum(x => x.Price * x.Quantity).ToString("C")
         </h4>
-        <form method="post" action="/ShoppingCart/ClearCart">
-            <button type="submit" class="btn btn-danger">Clear Cart</button>
-        </form>
     }
 </div>

@@ -14,5 +14,7 @@ namespace WarehouseApp.Services.Data.Interfaces
 
         List<AddToCartViewModel> SetProductsInCooke(AddToCartViewModel model, string cartCookie);
 
+        List<AddToCartViewModel> RemoveProductFromCart(string cartCookie, int id);
+
     }
 }

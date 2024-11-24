@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol.Core.Types;
 using System.Text.Json;
 using WarehouseApp.Services.Data;
 using WarehouseApp.Services.Data.Interfaces;
@@ -54,7 +55,25 @@ namespace WarehouseApp.Web.Controllers
 
             Response.Cookies.Append("ShoppingCart", JsonSerializer.Serialize(cart), options);
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult RemoveFromCart(int id)
+        {
+            var cartCookie = Request.Cookies["ShoppingCart"];
+
+            var cart = shoppingCartService.RemoveProductFromCart(cartCookie, id);
+
+            var options = new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = DateTimeOffset.Now.AddMinutes(30)
+            };
+
+            Response.Cookies.Append("ShoppingCart", JsonSerializer.Serialize(cart), options);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
