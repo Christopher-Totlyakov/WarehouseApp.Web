@@ -24,9 +24,6 @@ namespace WarehouseApp.Web.ViewModels.ShoppingCart
         {
             configuration.CreateMap<Data.Models.Product, ShoppingCartItems>()
                 .ForMember(p => p.Quantity, x => x.Ignore());
-
-            configuration.CreateMap<ShoppingCartItems, ShoppingCartItems>();
-
         }
     }
 }

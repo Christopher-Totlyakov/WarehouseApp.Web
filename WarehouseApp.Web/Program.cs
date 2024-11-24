@@ -10,6 +10,7 @@ using WarehouseApp.Web.ViewModels;
 using WarehouseApp.Data.Repository.Interfaces;
 using WarehouseApp.Services.Data.Interfaces;
 using WarehouseApp.Services.Data;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,6 +56,7 @@ builder.Services.AddScoped<IRepository, WarehouseApp.Data.Repository.Repository>
 
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
+builder.Services.AddScoped<IMessageServices, MessageService>();
 
 
 builder.Services.AddControllersWithViews();

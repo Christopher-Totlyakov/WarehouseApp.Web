@@ -2,61 +2,34 @@
 using Microsoft.EntityFrameworkCore;
 using WarehouseApp.Data.Models;
 using WarehouseApp.Data.Repository.Interfaces;
-
+using WarehouseApp.Services.Data;
+using WarehouseApp.Services.Data.Interfaces;
 using WarehouseApp.Web.ViewModels.Message;
 
 namespace WarehouseApp.Web.Controllers
 {
     public class MessageController : Controller
     {
-        private readonly IRepository repository;
+        private readonly IMessageServices messageService;
 
-        public MessageController(IRepository _repository)
+        public MessageController(IMessageServices _messageService)
         {
-            repository = _repository;
+            messageService = _messageService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var messages = await repository.GetAllAttached<Message>()
-                .Include(m => m.Sender)
-                .Include(m => m.Receiver)
-            .Select(m => new MessageViewModel
-            {
-                MessageId = m.MessageId,
-                SenderId = m.SenderId,
-                SenderEmail = m.Sender.Email!, 
-                ReceiverId = m.ReceiverId,
-                ReceiverName = m.Receiver != null ? m.Receiver.FirstName + m.Receiver.LastName : null,
-                MessageType = m.MessageType,
-                MessageContent = m.MessageContent,
-                SentDate = m.SentDate,
-                Status = m.Status
-            })
-            .ToListAsync();
+            var messages = await messageService.GetAllMessageAsync();
 
             return View(messages);
         }
+
         [HttpGet]
 		public async Task<IActionResult> ReadMessage(int id)
 		{
-			var message = await repository.GetAllAttached<Message>()
-				.Include(m => m.Sender)
-				.Include(m => m.Receiver)
-				.Where(m => m.MessageId == id)
-				.Select(m => new MessageViewModel
-				{
-					MessageId = m.MessageId,
-					SenderEmail = m.Sender.Email!,
-					ReceiverName = m.Receiver != null ? m.Receiver.FirstName + " " + m.Receiver.LastName : "Not assigned",
-					MessageType = m.MessageType,
-					MessageContent = m.MessageContent,
-					SentDate = m.SentDate,
-					Status = m.Status
-				})
-				.FirstOrDefaultAsync();
+            var message = await messageService.GetMessageByIdAsync(id);
 
-			if (message == null)
+            if (message == null)
 			{
 				return NotFound();
 			}
