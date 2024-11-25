@@ -1,0 +1,29 @@
+﻿@using WarehouseApp.Web.ViewModels.Message
+@model SendMessage
+
+<div class="container mt-4">
+    <h2>Send a Message</h2>
+
+    <form asp-action="SendMessage" method="post">
+        
+        <div class="mb-3">
+            <label for="MessageType" class="form-label">Message Type:</label>
+            <select id="MessageType" name="MessageType" class="form-select" required>
+                <option value="" disabled selected>Select type</option>
+                <option value="Pending">Pending</option>
+                <option value="Sent">Sent</option>
+                <option value="Failed">Failed</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="MessageContent" class="form-label">Message Content:</label>
+            <textarea id="MessageContent" name="MessageContent" class="form-control" rows="4" placeholder="Enter your message" maxlength="500"
+                      oninput="this.setCustomValidity(this.value.length < 10 ? 'The message must be at least 10 characters long.' : '')"
+                      required></textarea>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Send Message</button>
+        </div>
+    </form>
+</div>

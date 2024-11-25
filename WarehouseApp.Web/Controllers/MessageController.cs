@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using System.Security.Claims;
 using WarehouseApp.Data.Models;
 using WarehouseApp.Data.Repository.Interfaces;
 using WarehouseApp.Services.Data;
@@ -36,5 +39,40 @@ namespace WarehouseApp.Web.Controllers
 
 			return PartialView("~/Views/Shared/_ReadMessagePartial.cshtml", message);
 		}
-	}
+
+        [HttpGet]
+        public IActionResult SendMessage() 
+        {
+            var message = new SendMessage();
+            return View(message);
+        }
+
+        [HttpPost]
+        public IActionResult SendMessage(SendMessage message)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(message);
+            }
+            //TODO validacia parst guid
+           var idUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (String.IsNullOrWhiteSpace(idUser))
+            {
+                RedirectToAction(nameof(Index));
+            }
+
+            // Invalid parameter in the URL
+            bool isGuidValid = Guid.TryParse(idUser, out Guid parsedGuid);
+            if (!isGuidValid)
+            {
+                RedirectToAction(nameof(Index));
+            }
+
+
+            messageService.SendMess(message, parsedGuid);
+
+            return RedirectToAction(nameof(Index));
+        }
+    }
 }

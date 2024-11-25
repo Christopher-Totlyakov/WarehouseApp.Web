@@ -40,6 +40,4 @@ namespace WarehouseApp.Web.ViewModels.Message
                 .ForMember(m => m.ReceiverName, x => x.MapFrom(r => r.Receiver != null ? $"{r.Receiver.FirstName} {r.Receiver.LastName}" : null));
         }
     }
-}
-                            
-                            
+}                   
