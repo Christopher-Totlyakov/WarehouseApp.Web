@@ -89,7 +89,7 @@ namespace WarehouseApp.Common
         public static class Users
         {
             public const int NameMaxLength = 20;
-            public const int NameMinLength = 1;
+            public const int NameMinLength = 2;
 
             public const int CompanyNameMaxLength = 20;
             public const int CompanyNameMinLength = 4;

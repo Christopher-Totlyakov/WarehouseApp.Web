@@ -40,7 +40,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
     .AddRoles<IdentityRole<Guid>>()
     .AddSignInManager<SignInManager<ApplicationUser>>()
     .AddUserManager<UserManager<ApplicationUser>>()
-    .AddDefaultTokenProviders();//
+    .AddDefaultTokenProviders();
 
 builder.Services.AddDistributedMemoryCache(); 
 
@@ -59,7 +59,12 @@ builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
 builder.Services.AddScoped<IMessageServices, MessageService>();
 
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+	.AddViewOptions(options =>
+	{
+		options.HtmlHelperOptions.ClientValidationEnabled = true;
+	});
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();

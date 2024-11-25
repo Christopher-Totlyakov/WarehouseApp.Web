@@ -18,7 +18,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using WarehouseApp.Common;
 using WarehouseApp.Data.Models.Users;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using static WarehouseApp.Common.EntityValidationConstants.Users;
 
 namespace WarehouseApp.Web.Areas.Identity.Pages.Account
 {
@@ -30,8 +33,11 @@ namespace WarehouseApp.Web.Areas.Identity.Pages.Account
         //private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         //private readonly IEmailSender _emailSender;
+        private readonly IPasswordValidator<ApplicationUser> _passwordValidator;
 
         public RegisterModel(
+            IPasswordValidator<ApplicationUser> passwordValidator,
+
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
@@ -43,6 +49,7 @@ namespace WarehouseApp.Web.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             //_emailSender = emailSender;
+            _passwordValidator = passwordValidator;
         }
 
         /// <summary>
@@ -70,33 +77,96 @@ namespace WarehouseApp.Web.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
+            [Required]
+            [StringLength(NameMaxLength,
+         MinimumLength = NameMinLength,
+         ErrorMessage = "The username must be between {2} and {1} characters.")]
+            public string UserName { get; set; }
+
             [Required]
             [EmailAddress]
-            [Display(Name = "Email")]
+            [StringLength(EmailMaxLength,
+                MinimumLength = EmailMinLength,
+                ErrorMessage = "The email must be between {2} and {1} characters.")]
             public string Email { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
             public string Password { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "Passwords do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            public string UserType { get; set; }
+
+            // Полета за Customer
+            [StringLength(NameMaxLength,
+                MinimumLength = NameMinLength,
+                ErrorMessage = "The first name must be between {2} and {1} characters.")]
+            public string FirstName { get; set; }
+
+            [StringLength(NameMaxLength,
+                MinimumLength = NameMinLength,
+                ErrorMessage = "The last name must be between {2} and {1} characters.")]
+            public string LastName { get; set; }
+
+            // Полета за Distributor
+            [StringLength(CompanyNameMaxLength,
+                MinimumLength = CompanyNameMinLength,
+                ErrorMessage = "The company name must be between {2} and {1} characters.")]
+            public string CompanyName { get; set; }
+
+            
+            [StringLength(TaxNumberMaxLength,
+                MinimumLength = TaxNumberMinLength,
+                ErrorMessage = "The tax number must be between {2} and {1} characters.")]
+            public string TaxNumber { get; set; }
+
+            [StringLength(MOLMaxLength,
+                MinimumLength = MOLMinLength,
+                ErrorMessage = "The MOL must be between {2} and {1} characters.")]
+            public string MOL { get; set; }
+
+            [EmailAddress]
+            [StringLength(EmailMaxLength,
+                MinimumLength = EmailMinLength,
+                ErrorMessage = "The company email must be between {2} and {1} characters.")]
+            public string CompanyEmail { get; set; }
+
+            [StringLength(PhoneMaxLength,
+                MinimumLength = PhoneMinLength,
+                ErrorMessage = "The phone number must be between {2} and {1} characters.")]
+            public string CompanyPhoneNumber { get; set; }
+
+            [StringLength(AddressMaxLength,
+                MinimumLength = AddressMinLength,
+                ErrorMessage = "The address must be between {2} and {1} characters.")]
+            public string BusinessAddress { get; set; }
+
+            public DateTime? LicenseExpirationDate { get; set; }
+
+            [Range(DiscountRateMin,
+                DiscountRateMax,
+                ErrorMessage = "The discount rate must be between {1} and {2}.")]
+            public decimal DiscountRate { get; set; }
+
+            [StringLength(AddressMaxLength,
+                MinimumLength = AddressMinLength,
+                ErrorMessage = "The factory location must be between {2} and {1} characters.")]
+            public string FactoryLocation { get; set; }
+
+            [StringLength(PreferredDeliveryMethodMaxLength,
+                MinimumLength = PreferredDeliveryMethodMinLength,
+                ErrorMessage = "The preferred delivery method must be between {2} and {1} characters.")]
+            public string PreferredDeliveryMethod { get; set; }
+
+            
+            public DateTime StartWork { get; set; }
+
+            public DateTime? EndWork { get; set; }
+
         }
 
 
@@ -110,13 +180,114 @@ namespace WarehouseApp.Web.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            if (ModelState.IsValid)
+           
+            ApplicationUser user = null;
+            if (Input.Password != null)
             {
-                var user = CreateUser();
-                user.Email = Input.Email;
+                var passwordValidationResult = await _passwordValidator.ValidateAsync(_userManager, user, Input.Password);
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                //await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                if (!passwordValidationResult.Succeeded)
+                {
+                    foreach (var error in passwordValidationResult.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+            else 
+            {
+                ModelState.AddModelError(string.Empty, "Password is missing");
+            }
+            
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+			var userType = Input.UserType;
+
+			switch (userType)
+                {
+                    case "Customer":
+                    if (Input.UserName == null || Input.Email == null 
+                        || Input.FirstName == null || Input.LastName == null)
+					{
+						return Page();
+					}
+                        user = new Customer
+                        {
+                            UserName = Input.UserName,
+                            Email = Input.Email,
+                            FirstName = Input.FirstName,
+                            LastName = Input.LastName
+                        };
+                        break;
+
+                    case "Distributor":
+					if (Input.UserName == null || Input.Email == null
+					   || Input.CompanyName == null || Input.TaxNumber == null
+					   || Input.MOL == null || Input.CompanyEmail == null
+					   || Input.CompanyPhoneNumber == null || Input.BusinessAddress == null
+					   || Input.LicenseExpirationDate == null || Input.DiscountRate == null)
+					{
+						return Page();
+					}
+					user = new Distributor
+                        {
+                            UserName = Input.UserName,
+                            Email = Input.Email,
+                            CompanyName = Input.CompanyName,
+                            TaxNumber = Input.TaxNumber,
+                            MOL = Input.MOL,
+                            CompanyEmail = Input.CompanyEmail,
+                            CompanyPhoneNumber = Input.CompanyPhoneNumber,
+                            BusinessAddress = Input.BusinessAddress,
+                            LicenseExpirationDate = Input.LicenseExpirationDate,
+                            DiscountRate = Input.DiscountRate
+                        };
+                        break;
+
+                    case "Supplier":
+					if (Input.UserName == null || Input.Email == null
+					   || Input.CompanyName == null || Input.FactoryLocation == null
+					   || Input.PreferredDeliveryMethod == null)
+					{
+						return Page();
+					}
+					user = new Supplier
+                        {
+                            UserName = Input.UserName,
+                            Email = Input.Email,
+                            CompanyName = Input.CompanyName,
+                            factoryLocation = Input.FactoryLocation,
+                            PreferredDeliveryMethod = Input.PreferredDeliveryMethod
+                        };
+                        break;
+
+                    case "WarehouseWorker":
+					if (Input.UserName == null || Input.Email == null
+					   || Input.StartWork == null || Input.FirstName == null
+					   || Input.LastName == null)
+					{
+						return Page();
+					}
+					user = new WarehouseWorker
+                        {
+                            UserName = Input.UserName,
+                            Email = Input.Email,
+                            StartWork = Input.StartWork,
+                            EndWork = Input.EndWork,
+                            FirstName = Input.FirstName,
+                            LastName = Input.LastName,
+                            
+                        };
+                        break;
+
+                    default:
+                        ModelState.AddModelError(string.Empty, "Invalid user type.");
+                        return Page();
+                }
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -124,36 +295,20 @@ namespace WarehouseApp.Web.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    //var callbackUrl = Url.Page(
-                    //    "/Account/ConfirmEmail",
-                    //    pageHandler: null,
-                    //    values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                    //    protocol: Request.Scheme);
-
-                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    //if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    //{
-                    //    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    //}
-                    //else
-                    //{
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    //}
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
-            }
 
-            // If we got this far, something failed, redisplay form
+
             return Page();
         }
+
+
 
         private ApplicationUser CreateUser()
         {
