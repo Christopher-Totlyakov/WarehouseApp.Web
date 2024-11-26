@@ -32,6 +32,14 @@ namespace WarehouseApp.Data
         public virtual DbSet<Sale> Sales { get; set; } = null!;
         public virtual DbSet<SaleProduct> SaleProducts { get; set; } = null!;
 
+        public virtual DbSet<Customer> Customers { get; set; } = null!;
+        public virtual DbSet<Distributor> Distributors { get; set; } = null!;
+        public virtual DbSet<WarehouseWorker> WarehouseWorkers { get; set; } = null!;
+        public virtual DbSet<Supplier> Suppliers { get; set; } = null!;
+        public virtual DbSet<SenderMessageUser> SenderMessageUsers { get; set; } = null!;
+        public virtual DbSet<RequesterAndBuyerUser> RequesterAndBuyerUsers { get; set; } = null!;
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

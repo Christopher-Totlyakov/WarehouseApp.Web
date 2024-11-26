@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WarehouseApp.Data.Models;
 using WarehouseApp.Services.Data.Interfaces;
+using WarehouseApp.Web.ViewModels.Category;
 using WarehouseApp.Web.ViewModels.Product;
 
 namespace WarehouseApp.Web.Controllers
@@ -30,5 +33,34 @@ namespace WarehouseApp.Web.Controllers
 
 			return View(products);
 		}
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var product = await productService.GetProductEditByIdAsync(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditProductViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.AvailableCategories = await productService.GetAllCategoryAsync();
+                    
+                return View(model);
+            }
+
+            bool successfully = await productService.SaveProductAsync( model);
+
+            return RedirectToAction("Index");
+        }
+
+       
     }
 }
