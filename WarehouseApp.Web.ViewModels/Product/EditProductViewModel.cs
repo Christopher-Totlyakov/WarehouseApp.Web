@@ -1,15 +1,18 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WarehouseApp.Services.Mapping;
 using WarehouseApp.Web.ViewModels.Category;
 using static WarehouseApp.Common.EntityValidationConstants.Product;
 
+
 namespace WarehouseApp.Web.ViewModels.Product
 {
-    public class EditProductViewModel
+    public class EditProductViewModel : IMapTo<Data.Models.Product>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
@@ -38,5 +41,10 @@ namespace WarehouseApp.Web.ViewModels.Product
         public List<int> SelectedCategoryIds { get; set; } = new List<int>();
         public IEnumerable<CategoryViewModel> AvailableCategories { get; set; } = new List<CategoryViewModel>();
 
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<EditProductViewModel, Data.Models.Product>()
+                .ForMember(d => d.ProductCategories, x => x.Ignore());
+        }
     }
 }

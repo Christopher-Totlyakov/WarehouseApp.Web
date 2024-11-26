@@ -22,10 +22,6 @@ namespace WarehouseApp.Services.Data
             repository = _repository;
         }
 
-        public Task AddProductAsync(AddProductFormModel product)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<IEnumerable<ProductIndexViewModel>> GetAllProductsAsync()
         {
@@ -127,6 +123,27 @@ namespace WarehouseApp.Services.Data
             }
 
            await repository.UpdateAsync(product);
+            return true;
+        }
+
+        public async Task<bool> AddProductAsync(EditProductViewModel model)
+        {
+            var product = new Product();
+            AutoMapperConfig.MapperInstance.Map(model, product);
+
+            if (product == null)
+            {
+                return false;
+            }
+            foreach (var categoryId in model.SelectedCategoryIds)
+            {
+                product.ProductCategories.Add(new ProductCategory
+                {
+                    CategoryId = categoryId
+                });
+            }
+
+            await repository.AddAsync(product);
             return true;
         }
     }

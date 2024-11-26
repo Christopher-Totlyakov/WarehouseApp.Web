@@ -58,9 +58,41 @@ namespace WarehouseApp.Web.Controllers
 
             bool successfully = await productService.SaveProductAsync( model);
 
+            if (!successfully)
+            {
+                return View(model);
+            }
+
             return RedirectToAction("Index");
         }
 
-       
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            var model = new EditProductViewModel();
+            model.AvailableCategories = await productService.GetAllCategoryAsync();
+
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Add(EditProductViewModel model)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                model.AvailableCategories = await productService.GetAllCategoryAsync();
+
+                return View(model);
+            }
+
+            bool successfully = await productService.AddProductAsync(model);
+
+            if (!successfully) 
+            {
+                return View(model);
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace WarehouseApp.Services.Data.Interfaces
     {
         Task<IEnumerable<ProductIndexViewModel>> GetAllProductsAsync();
 
-        Task AddProductAsync(AddProductFormModel product);
+        Task<bool> AddProductAsync(EditProductViewModel model);
 
         Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(int id);
 
