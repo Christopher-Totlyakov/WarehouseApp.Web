@@ -1,0 +1,51 @@
+﻿@using WarehouseApp.Web.ViewModels.Admin
+@model IEnumerable<AllUsersViewModel>
+
+<div class="container mt-5">
+    <h1>Users List</h1>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Email</th>
+                <th>User Type</th>
+                <th>Personal Data Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                int index = 1;
+                foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@index</td>
+                        <td>@user.Email</td>
+                        <td>@user.UserType</td>
+                        <td>
+                            @if (user.IsPersonalDataDeleted)
+                            {
+                                <span class="text-danger">Deleted</span>
+                            }
+                            else
+                            {
+                                <span class="text-success">Active</span>
+                            }
+                        </td>
+                        <td>
+                            <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@user.Id">View Details</a>
+                            <a class="btn btn-danger btn-sm" asp-action="DeletePersonalData" asp-route-id="@user.Id">Delete Personal Data</a>
+                        </td>
+                    </tr>
+                    index++;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">No users found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

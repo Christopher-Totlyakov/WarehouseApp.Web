@@ -1,0 +1,28 @@
+﻿@using WarehouseApp.Web.ViewModels.Admin
+@model UserDetailsViewModel
+
+<div class="container mt-5">
+    <h1>User Details</h1>
+    <table class="table table-bordered">
+        <tr>
+            <th>Property</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td><strong>Email</strong></td>
+            <td>@Model.Email</td>
+        </tr>
+        <tr>
+            <td><strong>User Type</strong></td>
+            <td>@Model.UserType</td>
+        </tr>
+        @foreach (var info in Model.AdditionalInfo)
+        {
+            <tr>
+                <td><strong>@info.Key</strong></td>
+                <td>@info.Value</td>
+            </tr>
+        }
+    </table>
+    <a class="btn btn-secondary" asp-action="Index">Back to Users</a>
+</div>

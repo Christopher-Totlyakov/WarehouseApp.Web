@@ -56,13 +56,15 @@ namespace WarehouseApp.Services.Data
                 MessageType = message.MessageType,
                 MessageContent = message.MessageContent,
                 SentDate = DateTime.UtcNow,
-                Status = "Unread"
-                
+                Status = "Unread",
+                SoftDelete = false
+
+
             };
 
             try
             {
-                await repository.AddAsync<WarehouseApp.Data.Models.Message>(newMessage);
+                await repository.AddAsync(newMessage);
                 return true;
             }
             catch (Exception)

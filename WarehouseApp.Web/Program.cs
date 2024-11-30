@@ -51,12 +51,19 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true; 
 });
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Account/Login"; 
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+});
+
 
 builder.Services.AddScoped<IRepository, WarehouseApp.Data.Repository.Repository>();
 
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
 builder.Services.AddScoped<IMessageServices, MessageService>();
+builder.Services.AddScoped<IUsersServices, UsersServices>();
 
 
 builder.Services.AddControllersWithViews()
@@ -92,6 +99,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 
+app.MapControllerRoute(
+    name: "Areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

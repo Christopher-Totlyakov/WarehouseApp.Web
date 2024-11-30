@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
@@ -11,6 +12,7 @@ using WarehouseApp.Web.ViewModels.Message;
 
 namespace WarehouseApp.Web.Controllers
 {
+    [Authorize]   
     public class MessageController : Controller
     {
         private readonly IMessageServices messageService;
