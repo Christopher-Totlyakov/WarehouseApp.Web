@@ -30,15 +30,15 @@ namespace WarehouseApp.Services.Data
                 ? JsonSerializer.Deserialize<List<AddToCartViewModel>>(cartCookie)
                 : new List<AddToCartViewModel>();
 
-            var productIds = items.Select(item => item.ProductId).ToList();
+            var productIds = items.Select(item => item.ProductId ).ToList();
 
             var products = await repository.GetAllAttached<WarehouseApp.Data.Models.Product>()
-                    .Where(p => productIds.Contains(p.Id))
+                    .Where(p => productIds.Contains(p.Id) && p.SoftDelete == false)
                     .ToListAsync();
 
             var shoppingCartItems = products.Select(p =>
             {
-                var cartItem = items.FirstOrDefault(i => i.ProductId == p.Id);
+                var cartItem = items.FirstOrDefault(i => i.ProductId == p.Id && p.SoftDelete == false);
                 return new ShoppingCartItems
                 {
                     Id = p.Id,

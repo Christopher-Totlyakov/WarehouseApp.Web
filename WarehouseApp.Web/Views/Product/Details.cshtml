@@ -28,7 +28,14 @@
 							<li class="list-group-item">@category</li>
 						}
 					</ul>
-					<a href="/Products/Buy/@Model.Id" class="btn btn-primary mt-3">Buy Now</a>
+					<form asp-controller="ShoppingCart"
+						  asp-action="AddToCart"
+						  method="get"
+						  class="d-inline">
+						<input type="hidden" name="productId" value="@Model.Id" />
+						<input type="hidden" name="quantity" value="1" />
+						<button type="submit" class="btn btn-success" onclick="loadAddToCartModal(@Model.Id)">Buy Now</button>
+					</form>
 				</div>
 			</div>
 		</div>

@@ -23,5 +23,8 @@ namespace WarehouseApp.Data.Models
 
         public ICollection<ProductCategory> ProductCategories { get; set; } = new HashSet<ProductCategory>();
 
+        [Required]
+        public bool SoftDelete { get; set; } = false;
+
     }
 }

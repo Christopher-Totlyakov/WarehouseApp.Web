@@ -31,6 +31,11 @@ namespace WarehouseApp.Web.Controllers
 			ProductDetailsViewModel products =
 			   await productService.GetProductDetailsByIdAsync(id);
 
+            if (products == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
 			return View(products);
 		}
 
@@ -93,6 +98,18 @@ namespace WarehouseApp.Web.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            bool IsSuccess = await productService.SoftDeleteAsync(id);
+            
+            if (!IsSuccess) 
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

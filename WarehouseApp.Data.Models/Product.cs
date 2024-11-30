@@ -47,5 +47,8 @@ namespace WarehouseApp.Data.Models
         public ICollection<SaleProduct> SaleProducts { get; set; } = new HashSet<SaleProduct>();
 
         public ICollection<OrderProduct> OrderProducts { get; set; } = new HashSet<OrderProduct>();
+
+        [Required]
+        public bool SoftDelete { get; set; } = false;
     }
 }

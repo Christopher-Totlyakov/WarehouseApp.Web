@@ -27,6 +27,7 @@ namespace WarehouseApp.Services.Data
         {
             IEnumerable<ProductIndexViewModel> productViewModel = await repository
                 .GetAllAttached<Product>()
+                .Where(x => x.SoftDelete != true)
                 .To<ProductIndexViewModel>()
                 .ToArrayAsync();
 
@@ -37,6 +38,7 @@ namespace WarehouseApp.Services.Data
         {
             ProductDetailsViewModel? productViewModel = await repository
                .GetAllAttached<Product>()
+               .Where(x => x.SoftDelete != true)
                .Include(p => p.ProductCategories)
                    .ThenInclude(pc => pc.Category)
                    .Select(p => new ProductDetailsViewModel
@@ -58,6 +60,7 @@ namespace WarehouseApp.Services.Data
         public async Task<EditProductViewModel?> GetProductEditByIdAsync(int id)
         {
             var product = await repository.GetAllAttached<Product>()
+                .Where(x => x.SoftDelete != true)
                 .Include(p => p.ProductCategories)
                 .ThenInclude(pc => pc.Category)
                 .FirstOrDefaultAsync(p => p.Id == id);
@@ -87,6 +90,7 @@ namespace WarehouseApp.Services.Data
         public async Task<IEnumerable<CategoryViewModel?>> GetAllCategoryAsync()
         {
             var categories = await repository.GetAllAttached<Category>()
+                .Where(x => x.SoftDelete != true)
                .Select(c => new CategoryViewModel
                {
                    Id = c.Id,
@@ -98,6 +102,7 @@ namespace WarehouseApp.Services.Data
         public async Task<bool> SaveProductAsync(EditProductViewModel model)
         {
             var product = await repository.GetAllAttached<Product>()
+                .Where(x => x.SoftDelete != true)
                .Include(p => p.ProductCategories)
                .FirstOrDefaultAsync(p => p.Id == model.Id);
 
@@ -144,6 +149,25 @@ namespace WarehouseApp.Services.Data
             }
 
             await repository.AddAsync(product);
+            return true;
+        }
+
+        public async Task<bool> SoftDeleteAsync(int id)
+        {
+            var product = await repository
+                .GetAllAttached<Product>()
+                .Where(x => x.Id == id && x.SoftDelete == false)
+                .ToListAsync();
+
+            product[0].SoftDelete = true;
+
+            if (product[0] == null) 
+            {
+                return false;
+            }
+
+            await repository.UpdateAsync(product[0]);
+
             return true;
         }
     }

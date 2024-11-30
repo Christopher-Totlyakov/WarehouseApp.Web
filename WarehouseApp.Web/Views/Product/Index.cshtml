@@ -26,6 +26,11 @@
                            asp-route-id="@product.Id"
                            class="btn btn-primary">Edit</a>
 
+                        <a asp-controller="Product"
+                           asp-action="Delete"
+                           asp-route-id="@product.Id"
+                           class="btn btn-primary">Delete</a>
+
                         <form asp-controller="ShoppingCart"
                               asp-action="AddToCart"
                               method="get"

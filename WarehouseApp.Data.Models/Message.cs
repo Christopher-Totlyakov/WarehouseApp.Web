@@ -52,5 +52,8 @@ namespace WarehouseApp.Data.Models
         [Comment("Message status")]
         [StringLength(MassageStatusMaxLength)]
         public string Status { get; set; } = null!;
+
+        [Required]
+        public bool SoftDelete { get; set; } = false;
     }
 }

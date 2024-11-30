@@ -22,5 +22,7 @@ namespace WarehouseApp.Services.Data.Interfaces
         Task<IEnumerable<CategoryViewModel?>> GetAllCategoryAsync();
 
         Task<bool> SaveProductAsync(EditProductViewModel model);
+
+        Task<bool> SoftDeleteAsync(int id);
     }
 }
