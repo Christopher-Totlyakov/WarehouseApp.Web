@@ -64,6 +64,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
 builder.Services.AddScoped<IMessageServices, MessageService>();
 builder.Services.AddScoped<IUsersServices, UsersServices>();
+builder.Services.AddScoped<IRequestService, RequestService>();
 
 
 builder.Services.AddControllersWithViews()

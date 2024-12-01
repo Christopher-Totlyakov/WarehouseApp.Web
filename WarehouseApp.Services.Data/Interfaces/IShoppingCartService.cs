@@ -20,7 +20,7 @@ namespace WarehouseApp.Services.Data.Interfaces
 
         List<AddToCartViewModel> SetEditItemInCart(string cartCookie, AddToCartViewModel model);
 
-        Task<IEnumerable<AddToCartViewModel>> PurchaseItemAsync(string cartCookie);
+        Task<IEnumerable<AddToCartViewModel>> PurchaseItemAsync(string cartCookie, string userId);
 
         Task<bool> RequestItemAsync(string cartCookie, string userId);
 

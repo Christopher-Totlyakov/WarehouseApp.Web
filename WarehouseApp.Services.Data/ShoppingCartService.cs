@@ -8,6 +8,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using WarehouseApp.Data.Models;
 using WarehouseApp.Data.Models.Interfaces;
+using WarehouseApp.Data.Models.Users;
+using WarehouseApp.Data.Repository;
 using WarehouseApp.Data.Repository.Interfaces;
 using WarehouseApp.Services.Data.Interfaces;
 using WarehouseApp.Services.Mapping;
@@ -113,7 +115,7 @@ namespace WarehouseApp.Services.Data
             return cart;
         }
 
-        public async Task<IEnumerable<AddToCartViewModel>> PurchaseItemAsync(string cartCookie)
+        public async Task<IEnumerable<AddToCartViewModel>> PurchaseItemAsync(string cartCookie, string userId)
         {
 
             var cartItems = cartCookie != null
@@ -128,17 +130,46 @@ namespace WarehouseApp.Services.Data
             var inStockItems = cartItems.Where(item =>
                 products.Any(p => p.Id == item.ProductId && p.StockQuantity >= item.Quantity)).ToList();
 
-            foreach (var item in inStockItems)
+            bool isGuidValid = Guid.TryParse(userId, out Guid parsedGuid);
+            if (!isGuidValid)
             {
-                var product = products.First(p => p.Id == item.ProductId);
-                product.StockQuantity -= (uint)item.Quantity;
+                return cartItems;
             }
+            if (inStockItems.Any())
+            {
+                // Create a new Sale record
+                var sale = new WarehouseApp.Data.Models.Sale
+                {
+                    CustomerId = parsedGuid,
+                    SaleDate = DateTime.UtcNow,
+                    TotalAmount = inStockItems.Sum(item =>
+                        item.Quantity * products.First(p => p.Id == item.ProductId).Price),
+                    SaleProducts = inStockItems.Select(item =>
+                    {
+                        var product = products.First(p => p.Id == item.ProductId);
+                        return new WarehouseApp.Data.Models.SaleProduct
+                        {
+                            ProductId = product.Id,
+                            QuantitySold = item.Quantity,
+                            UnitPrice = product.Price
+                        };
+                    }).ToList()
+                };
 
-            await repository.SaveChangesAsync();
 
-            var remainingItems = cartItems.Except(inStockItems).ToList();
-            return remainingItems;
+                foreach (var item in inStockItems)
+                {
+                    var product = products.First(p => p.Id == item.ProductId);
+                    product.StockQuantity -= (uint)item.Quantity;
+                }
 
+                await repository.AddAsync(sale);
+                await repository.SaveChangesAsync();
+
+                var remainingItems = cartItems.Except(inStockItems).ToList();
+                return remainingItems;
+            }
+            return cartItems;
         }
 
         public async Task<bool> RequestItemAsync(string cartCookie, string userId)
@@ -174,12 +205,12 @@ namespace WarehouseApp.Services.Data
                 RequesterId = parsedGuid, // Метод за извличане на текущия потребител
                 RequestDate = DateTime.UtcNow,
                 Status = "Pending",
-                
+
                 RequestProducts = requestProducts.Select(rp => new WarehouseApp.Data.Models.RequestProduct
                 {
                     ProductId = rp.ProductId,
                     QuantityRequested = rp.Quantity,
-                    PriceUponRequest =  rp.PriceUponRequest
+                    PriceUponRequest = rp.PriceUponRequest
                 }).ToList()
             };
 

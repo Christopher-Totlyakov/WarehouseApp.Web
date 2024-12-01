@@ -1,0 +1,33 @@
+﻿@using WarehouseApp.Web.ViewModels.Requests
+@model RequestDetailsViewModel
+
+<div class="container mt-4">
+    <h2>Request Details</h2>
+    <p><strong>ID:</strong> @Model.RequestId</p>
+    <p><strong>Requester Email:</strong> @Model.RequesterEmail</p>
+    <p><strong>Status:</strong> @Model.Status</p>
+    <p><strong>Date:</strong> @Model.RequestDate.ToShortDateString()</p>
+    <p><strong>Processed By:</strong> @(Model.ProcessedByWorkerEmail ?? "Not yet processed")</p>
+    <p><strong>Note:</strong> @(Model.Note ?? "No notes")</p>
+
+    <h3>Products</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>@product.ProductName</td>
+                    <td>@product.QuantityRequested</td>
+                    <td>@product.PriceUponRequest.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

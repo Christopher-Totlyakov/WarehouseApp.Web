@@ -121,8 +121,9 @@ namespace WarehouseApp.Web.Controllers
                 TempData["Error"] = "Your cart is empty!";
                 return RedirectToAction("Index");
             }
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var remainingItems = await shoppingCartService.PurchaseItemAsync(cartCookie);
+            var remainingItems = await shoppingCartService.PurchaseItemAsync(cartCookie, userId);
 
             Response.Cookies.Append("ShoppingCart", JsonSerializer.Serialize(remainingItems));
 
