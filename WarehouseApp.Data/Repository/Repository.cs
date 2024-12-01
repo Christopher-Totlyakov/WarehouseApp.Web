@@ -14,7 +14,7 @@ namespace WarehouseApp.Data.Repository
     {
 
         private readonly WarehouseDbContext dbContext;
-        
+
         public Repository(WarehouseDbContext _dbContext)
         {
             dbContext = _dbContext;
@@ -64,12 +64,12 @@ namespace WarehouseApp.Data.Repository
             await dbContext.SaveChangesAsync();
         }
 
-        public bool Delete<TType,TId>(TId id) where TType : class
+        public bool Delete<TType, TId>(TId id) where TType : class
         {
-            TType? entity = GetById<TType,TId>(id);
+            TType? entity = GetById<TType, TId>(id);
 
             if (entity != null)
-            { 
+            {
                 return false;
             }
             DbSet<TType>().Remove(entity);
@@ -77,7 +77,7 @@ namespace WarehouseApp.Data.Repository
             return true;
         }
 
-        public async Task<bool> DeleteAsync<TType,TId>(TId id) where TType : class
+        public async Task<bool> DeleteAsync<TType, TId>(TId id) where TType : class
         {
             TType? entity = await GetByIdAsync<TType, TId>(id);
 
@@ -118,6 +118,15 @@ namespace WarehouseApp.Data.Repository
             {
                 return false;
             }
-        }   
+        }
+        public void SaveChanges()
+        {
+            dbContext.SaveChanges();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

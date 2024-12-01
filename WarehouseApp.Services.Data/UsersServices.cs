@@ -32,7 +32,7 @@ namespace WarehouseApp.Services.Data
             {
                 bool isPersonalDataDeleted = typeof(ApplicationUser)
                     .GetProperties()
-                    .Where(p => Attribute.IsDefined(p, typeof(PersonalDataAttribute) ))
+                    .Where(p => Attribute.IsDefined(p, typeof(PersonalDataAttribute)))
                     .Any(p =>
                     {
                         var value = p.GetValue(user);
@@ -103,6 +103,7 @@ namespace WarehouseApp.Services.Data
 
         public async Task<bool> DeletePersonalDataAsync(string userId)
         {
+
             var id = Guid.Parse(userId);
             var user = await this.userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
             if (user == null)
@@ -123,6 +124,10 @@ namespace WarehouseApp.Services.Data
             {
                 if (property.CanWrite)
                 {
+                    if (user is WarehouseWorker worker)
+                    {
+                        worker.EndWork = DateTime.UtcNow;
+                    }
                     if (property.PropertyType == typeof(string))
                     {
                         property.SetValue(user, "[Deleted]");

@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol.Core.Types;
+using System.Security.Claims;
 using System.Text.Json;
+using WarehouseApp.Data.Repository;
+using WarehouseApp.Data.Repository.Interfaces;
 using WarehouseApp.Services.Data;
 using WarehouseApp.Services.Data.Interfaces;
 using WarehouseApp.Web.ViewModels.ShoppingCart;
@@ -106,6 +109,50 @@ namespace WarehouseApp.Web.Controllers
 
             Response.Cookies.Append("ShoppingCart", JsonSerializer.Serialize(cart), options);
 
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PurchaseCartItems()
+        {
+            var cartCookie = Request.Cookies["ShoppingCart"];
+            if (cartCookie == null)
+            {
+                TempData["Error"] = "Your cart is empty!";
+                return RedirectToAction("Index");
+            }
+
+            var remainingItems = await shoppingCartService.PurchaseItemAsync(cartCookie);
+
+            Response.Cookies.Append("ShoppingCart", JsonSerializer.Serialize(remainingItems));
+
+            TempData["Success"] = "Transaction completed successfully!";
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateRequest()
+        {
+            var cartCookie = Request.Cookies["ShoppingCart"];
+            if (cartCookie == null)
+            {
+                TempData["Error"] = "Your cart is empty!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            bool isSucceeded =  await shoppingCartService.RequestItemAsync(cartCookie, userId);
+
+            if (!isSucceeded)
+            {
+                TempData["Error"] = "Error!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            Response.Cookies.Delete("ShoppingCart");
+
+            TempData["Success"] = "Request created successfully!";
             return RedirectToAction(nameof(Index));
         }
     }

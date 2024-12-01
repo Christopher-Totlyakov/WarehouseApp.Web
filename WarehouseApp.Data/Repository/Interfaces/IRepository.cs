@@ -30,5 +30,9 @@ namespace WarehouseApp.Data.Repository.Interfaces
         bool Update<TType>(TType item) where TType : class;
 
         Task<bool> UpdateAsync<TType>(TType item) where TType : class;
+
+        void SaveChanges();
+
+        Task SaveChangesAsync();
     }
 }

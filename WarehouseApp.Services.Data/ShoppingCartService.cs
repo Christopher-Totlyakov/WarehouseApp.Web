@@ -7,10 +7,12 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WarehouseApp.Data.Models;
+using WarehouseApp.Data.Models.Interfaces;
 using WarehouseApp.Data.Repository.Interfaces;
 using WarehouseApp.Services.Data.Interfaces;
 using WarehouseApp.Services.Mapping;
 using WarehouseApp.Web.ViewModels.ShoppingCart;
+using static WarehouseApp.Common.EntityValidationConstants;
 
 
 namespace WarehouseApp.Services.Data
@@ -30,7 +32,7 @@ namespace WarehouseApp.Services.Data
                 ? JsonSerializer.Deserialize<List<AddToCartViewModel>>(cartCookie)
                 : new List<AddToCartViewModel>();
 
-            var productIds = items.Select(item => item.ProductId ).ToList();
+            var productIds = items.Select(item => item.ProductId).ToList();
 
             var products = await repository.GetAllAttached<WarehouseApp.Data.Models.Product>()
                     .Where(p => productIds.Contains(p.Id) && p.SoftDelete == false)
@@ -109,6 +111,87 @@ namespace WarehouseApp.Services.Data
             }
 
             return cart;
+        }
+
+        public async Task<IEnumerable<AddToCartViewModel>> PurchaseItemAsync(string cartCookie)
+        {
+
+            var cartItems = cartCookie != null
+                ? JsonSerializer.Deserialize<List<AddToCartViewModel>>(cartCookie)
+                : new List<AddToCartViewModel>();
+
+            var productIds = cartItems.Select(x => x.ProductId).ToList();
+            var products = await repository.GetAllAttached<WarehouseApp.Data.Models.Product>()
+                .Where(p => productIds.Contains(p.Id) && p.SoftDelete == false)
+                .ToListAsync();
+
+            var inStockItems = cartItems.Where(item =>
+                products.Any(p => p.Id == item.ProductId && p.StockQuantity >= item.Quantity)).ToList();
+
+            foreach (var item in inStockItems)
+            {
+                var product = products.First(p => p.Id == item.ProductId);
+                product.StockQuantity -= (uint)item.Quantity;
+            }
+
+            await repository.SaveChangesAsync();
+
+            var remainingItems = cartItems.Except(inStockItems).ToList();
+            return remainingItems;
+
+        }
+
+        public async Task<bool> RequestItemAsync(string cartCookie, string userId)
+        {
+            var cartItems = JsonSerializer.Deserialize<List<AddToCartViewModel>>(cartCookie);
+
+            var productIds = cartItems.Select(x => x.ProductId).ToList();
+            var products = await repository.GetAllAttached<WarehouseApp.Data.Models.Product>()
+                .Where(p => productIds.Contains(p.Id) && p.SoftDelete == false)
+                .ToListAsync();
+
+            var requestProducts = cartItems.Select(item =>
+            {
+                var product = products.FirstOrDefault(p => p.Id == item.ProductId);
+                return new RequestProductViewModel
+                {
+                    ProductId = item.ProductId,
+                    ProductName = product?.Name ?? "Unknown",
+                    Quantity = item.Quantity,
+                    IsInStock = product != null && product.StockQuantity >= item.Quantity,
+                    PriceUponRequest = product?.Price ?? 0
+                };
+            }).ToList();
+
+            bool isGuidValid = Guid.TryParse(userId, out Guid parsedGuid);
+            if (!isGuidValid)
+            {
+                return false;
+            }
+            // Прехвърлете данните към модел за базата данни (ако е необходимо)
+            var request = new WarehouseApp.Data.Models.Request
+            {
+                RequesterId = parsedGuid, // Метод за извличане на текущия потребител
+                RequestDate = DateTime.UtcNow,
+                Status = "Pending",
+                
+                RequestProducts = requestProducts.Select(rp => new WarehouseApp.Data.Models.RequestProduct
+                {
+                    ProductId = rp.ProductId,
+                    QuantityRequested = rp.Quantity,
+                    PriceUponRequest =  rp.PriceUponRequest
+                }).ToList()
+            };
+
+            try
+            {
+                await repository.AddAsync(request);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
