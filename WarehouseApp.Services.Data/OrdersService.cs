@@ -65,7 +65,7 @@ namespace WarehouseApp.Services.Data
         {
             var productsToOrder = await repository.GetAllAttached<RequestProduct>()
                     .Include(rp => rp.Product)
-                    .GroupBy(rp => new { rp.ProductId, rp.Product.Name }) 
+                    .GroupBy(rp => new { rp.ProductId, rp.Product.Name })
                     .Select(group => new OrderProductViewModel
                     {
                         ProductId = group.Key.ProductId,
@@ -129,6 +129,26 @@ namespace WarehouseApp.Services.Data
                     ProductName = p.Name
                 })
                 .ToListAsync();
+        }
+
+        public async Task<bool> EditOrderStatusAsync(EditOrderStatusViewModel model)
+        {
+            var order = await repository.GetByIdAsync<Order, int>(model.OrderId);
+            if (order == null)
+            {
+                return false;
+            }
+            
+            try
+            {
+                order.Status = model.Status;
+                await repository.UpdateAsync(order);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

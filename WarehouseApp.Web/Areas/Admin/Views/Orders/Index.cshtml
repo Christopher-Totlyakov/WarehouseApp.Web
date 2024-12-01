@@ -20,7 +20,10 @@
                     <td>@order.OrderId</td>
                     <td>@order.SupplierName</td>
                     <td>@order.OrderDate</td>
-                    <td>@order.Status</td>
+                    <td>
+                        @order.Status
+                        <a asp-action="EditStatus" asp-route-id="@order.OrderId" class="btn btn-warning btn-sm ml-2">Edit</a>
+                    </td>
                     <td>
                         <a asp-action="Details" asp-route-id="@order.OrderId" class="btn btn-info btn-sm">Details</a>
                     </td>

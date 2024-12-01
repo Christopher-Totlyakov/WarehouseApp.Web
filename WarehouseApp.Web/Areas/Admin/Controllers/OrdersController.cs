@@ -12,7 +12,7 @@ namespace WarehouseApp.Web.Areas.Admin.Controllers
     public class OrdersController : Controller
     {
         private readonly IOrdersService orderService;
-                
+
         public OrdersController(IOrdersService orderService)
         {
             this.orderService = orderService;
@@ -65,16 +65,16 @@ namespace WarehouseApp.Web.Areas.Admin.Controllers
 
                 return View(model);
             }
-       //     var selectedProducts = model.OrderProducts
-       //.Concat(model.AvailableProducts.Where(p => p.QuantityOrdered > 0)
-       //.Select(p => new OrderProductViewModel
-       //{
-       //    ProductId = p.ProductId,
-       //    ProductName = p.ProductName,
-       //    QuantityOrdered = p.QuantityOrdered
-       //})).ToList();
+            //     var selectedProducts = model.OrderProducts
+            //.Concat(model.AvailableProducts.Where(p => p.QuantityOrdered > 0)
+            //.Select(p => new OrderProductViewModel
+            //{
+            //    ProductId = p.ProductId,
+            //    ProductName = p.ProductName,
+            //    QuantityOrdered = p.QuantityOrdered
+            //})).ToList();
 
-       //     model.OrderProducts = selectedProducts;
+            //     model.OrderProducts = selectedProducts;
 
             var idUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -98,5 +98,46 @@ namespace WarehouseApp.Web.Areas.Admin.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+        [HttpGet]
+        public async Task<IActionResult> EditStatus(int Id)
+        {
+            var order = await orderService.GetOrderDetailsAsync(Id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            // Създайте модел с възможни статуси за редактиране
+            var statusOptions = new List<string> { "Pending", "Completed", "Cancelled" };
+
+            var model = new EditOrderStatusViewModel
+            {
+                OrderId = order.OrderId,
+                StatusOptions = statusOptions,
+                Status = order.Status
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateStatus(EditOrderStatusViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("EditStatus", model);
+            }
+
+            bool isSucceeded = await orderService.EditOrderStatusAsync(model);
+
+            if (!isSucceeded)
+            {
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(Index)); 
+        }
+
+
     }
 }

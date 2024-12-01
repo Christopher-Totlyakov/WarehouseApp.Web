@@ -21,5 +21,7 @@ namespace WarehouseApp.Services.Data.Interfaces
         Task<OrderDetailsViewModel?> GetOrderDetailsAsync(int orderId);
 
         Task<List<OrderProductViewModel>> GetAllAvailableProductsAsync();
+
+        Task<bool> EditOrderStatusAsync(EditOrderStatusViewModel model);
     }
 }
