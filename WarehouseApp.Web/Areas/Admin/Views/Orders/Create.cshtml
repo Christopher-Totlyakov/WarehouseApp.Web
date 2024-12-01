@@ -1,0 +1,86 @@
+﻿@using WarehouseApp.Web.ViewModels.Orders
+@model OrderViewModel
+
+
+<div class="container mt-4">
+    <h2>Create Order</h2>
+    <form asp-action="Create" method="post">
+        <div class="form-group">
+            <label for="SupplierId">Supplier</label>
+            <select id="SupplierId" name="SupplierId" class="form-control">
+                @foreach (var supplier in ViewBag.Suppliers)
+                {
+                    <option value="@supplier.Id">@supplier.UserName</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="OrderDate">Order Date</label>
+            <input id="OrderDate" name="OrderDate" type="datetime-local" class="form-control" value="@Model.OrderDate.ToString("yyyy-MM-ddTHH:mm")" disabled />
+        </div>
+
+        <h3>Products</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Auto Added</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.OrderProducts.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            <input type="hidden" name="OrderProducts[@i].ProductId" value="@Model.OrderProducts[i].ProductId" />
+                            <input type="hidden" name="OrderProducts[@i].ProductName" value="@Model.OrderProducts[i].ProductName" />
+                            @Model.OrderProducts[i].ProductName
+                        </td>
+                        <td>
+                            <input type="number" name="OrderProducts[@i].QuantityOrdered" class="form-control" value="@Model.OrderProducts[i].QuantityOrdered" />
+                            <span asp-validation-for="OrderProducts[@i].QuantityOrdered" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <input type="checkbox" disabled @(Model.OrderProducts[i].IsAutoAdded ? "checked" : "") />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+        @* <h3>Available Products</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Auto Added</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.AvailableProducts.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            <input type="hidden" name="AvailableProducts[@i].ProductId" value="@Model.AvailableProducts[i].ProductId" />
+                            <input type="hidden" name="AvailableProducts[@i].ProductName" value="@Model.AvailableProducts[@i].ProductName" />
+
+                            @Model.AvailableProducts[i].ProductName
+                        </td>
+                        <td>
+                            <input type="number" name="AvailableProducts[@i].QuantityOrdered" class="form-control" value="0" min="0" />
+                            <span asp-validation-for="AvailableProducts[@i].QuantityOrdered" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <input type="checkbox" disabled @(Model.OrderProducts[i].IsAutoAdded ? "checked" : "") />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table> *@
+
+        <button type="submit" class="btn btn-primary">Create Order</button>
+    </form>
+</div>

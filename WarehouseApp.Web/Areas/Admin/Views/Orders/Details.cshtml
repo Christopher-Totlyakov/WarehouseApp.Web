@@ -1,0 +1,32 @@
+﻿@using WarehouseApp.Web.ViewModels.Orders
+@model OrderDetailsViewModel
+
+<div class="container mt-4">
+    <h2>Order Details</h2>
+    <p><strong>Order ID:</strong> @Model.OrderId</p>
+    <p><strong>Supplier:</strong> @Model.SupplierName</p>
+    <p><strong>Order Date:</strong> @Model.OrderDate.ToString("yyyy-MM-dd")</p>
+    <p><strong>Status:</strong> @Model.Status</p>
+    <p><strong>Requested By:</strong> @Model.RequestedByWorkerName</p>
+
+    <h3>Products</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity Ordered</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>@product.ProductName</td>
+                    <td>@product.QuantityOrdered</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a asp-action="Index" class="btn btn-secondary">Back to Orders</a>
+</div>

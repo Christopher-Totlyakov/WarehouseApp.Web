@@ -22,7 +22,7 @@ namespace WarehouseApp.Data.Models
         public Guid SupplierId { get; set; }
 
         [ForeignKey(nameof(SupplierId))]
-        public ICollection<Supplier> Supplier { get; set; } = new HashSet<Supplier>();
+        public Supplier Supplier { get; set; } = null!;
 
         [Required]
         [Comment("Order date")]

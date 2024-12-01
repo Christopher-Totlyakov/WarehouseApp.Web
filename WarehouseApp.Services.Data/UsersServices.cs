@@ -112,12 +112,13 @@ namespace WarehouseApp.Services.Data
             }
             var userType = user.GetType();
             var personalDataProperties = userType
-        .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-        .Where(p =>
-            Attribute.IsDefined(p, typeof(PersonalDataAttribute)) &&
-            p.Name != nameof(ApplicationUser.Id) &&
-            p.Name != nameof(ApplicationUser.UserName) &&
-            p.Name != nameof(ApplicationUser.Email));
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(p =>
+                    Attribute.IsDefined(p, typeof(PersonalDataAttribute)) &&
+                    p.Name != nameof(ApplicationUser.Id) &&
+                    p.Name != nameof(ApplicationUser.UserName) &&
+                    p.Name != nameof(ApplicationUser.Email)
+                );
 
 
             foreach (var property in personalDataProperties)
