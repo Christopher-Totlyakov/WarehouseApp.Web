@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WarehouseApp.Data.Models;
 using WarehouseApp.Services.Data.Interfaces;
+using WarehouseApp.Web.Authorize;
 using WarehouseApp.Web.ViewModels.Category;
 using WarehouseApp.Web.ViewModels.Product;
 
@@ -40,6 +41,7 @@ namespace WarehouseApp.Web.Controllers
 		}
 
         [HttpGet]
+        [WarehouseWorkerAuthorize]
         public async Task<IActionResult> Edit(int id)
         {
             var product = await productService.GetProductEditByIdAsync(id);
@@ -52,6 +54,7 @@ namespace WarehouseApp.Web.Controllers
             return View(product);
         }
         [HttpPost]
+        [WarehouseWorkerAuthorize]
         public async Task<IActionResult> Edit(EditProductViewModel model)
         {
             if (!ModelState.IsValid)
@@ -72,6 +75,7 @@ namespace WarehouseApp.Web.Controllers
         }
 
         [HttpGet]
+        [WarehouseWorkerAuthorize]
         public async Task<IActionResult> Add()
         {
             var model = new EditProductViewModel();
@@ -80,6 +84,7 @@ namespace WarehouseApp.Web.Controllers
             return View(model);
         }
         [HttpPost]
+        [WarehouseWorkerAuthorize]
         public async Task<IActionResult> Add(EditProductViewModel model)
         {
 
@@ -100,6 +105,7 @@ namespace WarehouseApp.Web.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet]
+        [WarehouseWorkerAuthorize]
         public async Task<IActionResult> Delete(int id)
         {
             bool IsSuccess = await productService.SoftDeleteAsync(id);

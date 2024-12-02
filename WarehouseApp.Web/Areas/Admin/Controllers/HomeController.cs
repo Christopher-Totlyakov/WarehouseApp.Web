@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WarehouseApp.Web.Authorize;
 
 namespace WarehouseApp.Web.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	[Authorize]
-	public class HomeController : Controller
+    [WarehouseWorkerAuthorize]
+    public class HomeController : Controller
 	{
 		public IActionResult Index()
 		{

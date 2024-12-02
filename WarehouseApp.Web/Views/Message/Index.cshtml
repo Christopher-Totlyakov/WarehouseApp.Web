@@ -29,7 +29,12 @@
 						<td>@(string.IsNullOrEmpty(message.ReceiverName) ? "Not assigned" : message.ReceiverName)</td>
 						<td>@message.MessageType</td>
 						<td>@message.SentDate.ToString("yyyy-MM-dd HH:mm")</td>
-						<td>@message.Status</td>
+						<td>@message.Status
+							@if (User.HasClaim("UserType", "WarehouseWorker"))
+							{
+								<a asp-action="EditStatus" asp-route-id="@message.MessageId" class="btn btn-warning btn-sm ml-2">Edit</a>
+							}
+						</td>
 						<td>
 							<a asp-action="ReadMessage" asp-route-id="@message.MessageId" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#messageModal">Read</a>
 						</td>

@@ -11,8 +11,12 @@ namespace WarehouseApp.Services.Data.Interfaces
     {
         Task<IEnumerable<MessageViewModel>> GetAllMessageAsync();
 
+        Task<IEnumerable<MessageViewModel>> GetAllMessageFromCurrentUserAsync(Guid id);
+
         Task<MessageViewModel> GetMessageByIdAsync(int id);
 
         Task<bool> SendMess(SendMessage message, Guid idUser);
+
+        Task<bool> EditMessagesStatusAsync(EditMessageStatusViewModel model);
     }
 }

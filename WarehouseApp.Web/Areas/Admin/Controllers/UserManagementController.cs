@@ -2,13 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using WarehouseApp.Services.Data;
 using WarehouseApp.Services.Data.Interfaces;
+using WarehouseApp.Web.Authorize;
 using WarehouseApp.Web.ViewModels.Admin;
 
 namespace WarehouseApp.Web.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-    [Authorize]
-	public class UserManagementController : Controller
+    [WarehouseWorkerAuthorize]
+    public class UserManagementController : Controller
     {
         private readonly IUsersServices userService;
 

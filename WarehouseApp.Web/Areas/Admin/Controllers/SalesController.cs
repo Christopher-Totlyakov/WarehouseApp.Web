@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WarehouseApp.Services.Data.Interfaces;
+using WarehouseApp.Web.Authorize;
 
 namespace WarehouseApp.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [WarehouseWorkerAuthorize]
     public class SalesController : Controller
     {
         private readonly ISalesService salesService;

@@ -6,10 +6,12 @@ using WarehouseApp.Data.Repository;
 using WarehouseApp.Data.Repository.Interfaces;
 using WarehouseApp.Services.Data;
 using WarehouseApp.Services.Data.Interfaces;
+using WarehouseApp.Web.Authorize;
 using WarehouseApp.Web.ViewModels.ShoppingCart;
 
 namespace WarehouseApp.Web.Controllers
 {
+    [RequesterAndBuyerUserAuthorize]
     public class ShoppingCartController : Controller
     {
         private readonly IShoppingCartService shoppingCartService;

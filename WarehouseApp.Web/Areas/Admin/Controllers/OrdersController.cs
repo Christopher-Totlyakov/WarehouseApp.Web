@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using WarehouseApp.Data.Models.Interfaces;
 using WarehouseApp.Services.Data.Interfaces;
+using WarehouseApp.Web.Authorize;
 using WarehouseApp.Web.ViewModels.Orders;
 
 namespace WarehouseApp.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [WarehouseWorkerAuthorize]
     public class OrdersController : Controller
     {
         private readonly IOrdersService orderService;
@@ -107,7 +108,6 @@ namespace WarehouseApp.Web.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            // Създайте модел с възможни статуси за редактиране
             var statusOptions = new List<string> { "Pending", "Completed", "Cancelled" };
 
             var model = new EditOrderStatusViewModel
