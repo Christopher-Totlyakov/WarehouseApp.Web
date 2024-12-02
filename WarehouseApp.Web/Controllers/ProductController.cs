@@ -18,10 +18,19 @@ namespace WarehouseApp.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(decimal minPrice = 0, decimal maxPrice = 999, int? categoryId = null)
         {
             IEnumerable<ProductIndexViewModel> products =
-                await productService.GetAllProductsAsync();
+                await productService.GetAllProductsAsync(minPrice, maxPrice, categoryId);
+            
+            var categories = await productService.GetAllCategoryAsync();
+
+            
+            ViewData["MinPrice"] = minPrice;
+            ViewData["MaxPrice"] = maxPrice;
+            ViewData["SelectedCategoryId"] = categoryId;
+            ViewData["AvailableCategories"] = categories;
+
 
             return View(products);
         }

@@ -91,8 +91,22 @@ namespace WarehouseApp.Services.Data
                 })
                 .ToListAsync();
         }
+		public async Task<List<OrderListViewModel>> GetAllOrdersBySupplierIdAsync(Guid id)
+		{
+			return await repository.GetAllAttached<Order>()
+                .Where(o => o.SupplierId == id)
+			   .Include(o => o.Supplier)
+			   .Select(o => new OrderListViewModel
+			   {
+				   OrderId = o.OrderId,
+				   SupplierName = o.Supplier.UserName,
+				   OrderDate = o.OrderDate.ToString("yyyy-MM-dd"),
+				   Status = o.Status
+			   })
+			   .ToListAsync();
+		}
 
-        public async Task<OrderDetailsViewModel?> GetOrderDetailsAsync(int orderId)
+		public async Task<OrderDetailsViewModel?> GetOrderDetailsAsync(int orderId)
         {
             var order = await repository.GetAllAttached<Order>()
                 .Include(o => o.Supplier)
@@ -130,8 +144,9 @@ namespace WarehouseApp.Services.Data
                 })
                 .ToListAsync();
         }
+		
 
-        public async Task<bool> EditOrderStatusAsync(EditOrderStatusViewModel model)
+		public async Task<bool> EditOrderStatusAsync(EditOrderStatusViewModel model)
         {
             var order = await repository.GetByIdAsync<Order, int>(model.OrderId);
             if (order == null)
@@ -150,5 +165,7 @@ namespace WarehouseApp.Services.Data
             }
             return true;
         }
-    }
+
+		
+	}
 }

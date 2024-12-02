@@ -11,7 +11,7 @@ namespace WarehouseApp.Services.Data.Interfaces
 {
     public interface IProductService
     {
-        Task<IEnumerable<ProductIndexViewModel>> GetAllProductsAsync();
+        Task<IEnumerable<ProductIndexViewModel>> GetAllProductsAsync(decimal minPrice = 0, decimal maxPrice = 999, int? categoryId = null);
 
         Task<bool> AddProductAsync(EditProductViewModel model);
 

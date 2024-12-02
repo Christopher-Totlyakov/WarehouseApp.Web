@@ -1,5 +1,38 @@
-﻿@using WarehouseApp.Web.ViewModels.Product
+﻿@using WarehouseApp.Web.ViewModels.Category
+@using WarehouseApp.Web.ViewModels.Product
 @model IEnumerable<ProductIndexViewModel>
+
+<form asp-action="Index" method="get" class="mb-3">
+    <div class="row">
+        <div class="col-md-3">
+            <label for="minPrice">Min Price</label>
+            <input type="number" name="minPrice" id="minPrice" class="form-control" step="0.1" 
+                   value="@ViewData["MinPrice"]" />
+        </div>
+        <div class="col-md-3">
+            <label for="maxPrice">Max Price</label>
+            <input type="number" name="maxPrice" id="maxPrice" class="form-control" step="0.1" 
+                   value="@ViewData["MaxPrice"]" />
+        </div>
+        <div class="col-md-3">
+            <label for="categoryId">Category</label>
+            <select name="categoryId" id="categoryId" class="form-control">
+                <option value="">All Categories</option>
+                @foreach (var category in (IEnumerable<WarehouseApp.Web.ViewModels.Category.CategoryViewModel>)ViewData["AvailableCategories"])
+                {
+                    <option value="@category.Id"
+                            selected="@(category.Id == (int?)ViewData["SelectedCategoryId"] ? "selected" : null)">
+                        @category.Name
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label></label>
+            <button type="submit" class="btn btn-primary form-control">Filter</button>
+        </div>
+    </div>
+</form>
 
     <div id="modal-container"></div>
 
@@ -33,14 +66,17 @@
                                asp-route-id="@product.Id"
                                class="btn btn-primary">Delete</a>
                         }
-                        <form asp-controller="ShoppingCart"
-                              asp-action="AddToCart"
-                              method="get"
-                              class="d-inline">
-                            <input type="hidden" name="productId" value="@product.Id" />
-                            <input type="hidden" name="quantity" value="1" />
-                            <button type="submit" class="btn btn-success" onclick="loadAddToCartModal(@product.Id)">Buy Now</button>
-                        </form>
+                        @if (User.HasClaim("UserType", "Customer") || User.HasClaim("UserType", "Distributor"))
+                        {
+                            <form asp-controller="ShoppingCart"
+                                  asp-action="AddToCart"
+                                  method="get"
+                                  class="d-inline">
+                                <input type="hidden" name="productId" value="@product.Id" />
+                                <input type="hidden" name="quantity" value="1" />
+                                <button type="submit" class="btn btn-success" onclick="loadAddToCartModal(@product.Id)">Buy Now</button>
+                            </form>
+                        }
                     </div>
                 </div>
             </div>

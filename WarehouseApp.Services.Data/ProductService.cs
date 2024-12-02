@@ -23,15 +23,24 @@ namespace WarehouseApp.Services.Data
         }
 
 
-        public async Task<IEnumerable<ProductIndexViewModel>> GetAllProductsAsync()
+        public async Task<IEnumerable<ProductIndexViewModel>> GetAllProductsAsync(decimal minPrice, decimal maxPrice, int? categoryId)
         {
-            IEnumerable<ProductIndexViewModel> productViewModel = await repository
-                .GetAllAttached<Product>()
-                .Where(x => x.SoftDelete != true)
+            var query = repository
+                 .GetAllAttached<Product>()
+                 .Include(p => p.ProductCategories)
+                 .ThenInclude(pc => pc.Category)
+                 .Where(p => p.SoftDelete != true && p.Price >= minPrice && p.Price <= maxPrice);
+
+            if (categoryId.HasValue)
+            {
+                query = query.Where(p => p.ProductCategories.Any(pc => pc.CategoryId == categoryId.Value));
+            }
+
+            var products = await query
                 .To<ProductIndexViewModel>()
                 .ToArrayAsync();
 
-            return productViewModel;
+            return products;
         }
 
         public async Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(int id)
@@ -42,20 +51,20 @@ namespace WarehouseApp.Services.Data
                .Include(p => p.ProductCategories)
                    .ThenInclude(pc => pc.Category)
                    .Select(p => new ProductDetailsViewModel
-				   {
-					   Id = p.Id,
-					   Name = p.Name,
-					   ImagePath = p.ImagePath,
-					   Description = p.Description,
-					   Price = p.Price,
-					   StockQuantity = p.StockQuantity,
-					   Categories = p.ProductCategories.Select(pc => pc.Category.Name).ToList()
-				   })
-				   .FirstOrDefaultAsync(c => c.Id == id);
-			   
+                   {
+                       Id = p.Id,
+                       Name = p.Name,
+                       ImagePath = p.ImagePath,
+                       Description = p.Description,
+                       Price = p.Price,
+                       StockQuantity = p.StockQuantity,
+                       Categories = p.ProductCategories.Select(pc => pc.Category.Name).ToList()
+                   })
+                   .FirstOrDefaultAsync(c => c.Id == id);
 
-			return productViewModel;
-		}
+
+            return productViewModel;
+        }
 
         public async Task<EditProductViewModel?> GetProductEditByIdAsync(int id)
         {
@@ -127,7 +136,7 @@ namespace WarehouseApp.Services.Data
                 });
             }
 
-           await repository.UpdateAsync(product);
+            await repository.UpdateAsync(product);
             return true;
         }
 
@@ -161,7 +170,7 @@ namespace WarehouseApp.Services.Data
 
             product[0].SoftDelete = true;
 
-            if (product[0] == null) 
+            if (product[0] == null)
             {
                 return false;
             }

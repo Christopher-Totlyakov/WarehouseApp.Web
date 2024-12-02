@@ -18,7 +18,9 @@ namespace WarehouseApp.Services.Data.Interfaces
         
         Task<List<OrderListViewModel>> GetAllOrdersAsync();
 
-        Task<OrderDetailsViewModel?> GetOrderDetailsAsync(int orderId);
+        Task<List<OrderListViewModel>> GetAllOrdersBySupplierIdAsync(Guid id);
+
+		Task<OrderDetailsViewModel?> GetOrderDetailsAsync(int orderId);
 
         Task<List<OrderProductViewModel>> GetAllAvailableProductsAsync();
 

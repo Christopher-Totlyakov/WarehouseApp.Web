@@ -77,8 +77,14 @@
 						{
 							<a class="nav-link text-dark" asp-area="" asp-controller="Message" asp-action="Index">Messages</a>
 						}
+						@if (User.HasClaim("UserType", "Supplier"))
+						{
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Orders for Me</a>
+							</li>
+						}
 
-						@if (!User.HasClaim("UserType", "WarehouseWorker"))
+						@if (!User.HasClaim("UserType", "WarehouseWorker") && !User.HasClaim("UserType", "Supplier"))
 						{
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="Index">Shopping Cart</a>

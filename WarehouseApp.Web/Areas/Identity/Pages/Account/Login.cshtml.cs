@@ -120,16 +120,37 @@ namespace WarehouseApp.Web.Areas.Identity.Pages.Account
 
 					if (user is WarehouseWorker)
 					{
-						// Проверете дали claim вече е добавен
 						var existingClaim = (await _userManager.GetClaimsAsync(user)).FirstOrDefault(c => c.Type == "UserType");
 						if (existingClaim == null)
 						{
-							// Добавете claim към потребителя
 							await _userManager.AddClaimAsync(user, new Claim("UserType", "WarehouseWorker"));
 						}
 					}
+					else if (user is Supplier)
+					{
+						var existingClaim = (await _userManager.GetClaimsAsync(user)).FirstOrDefault(c => c.Type == "UserType");
+						if (existingClaim == null)
+						{
+							await _userManager.AddClaimAsync(user, new Claim("UserType", "Supplier"));
+						}
+					}
+					else if (user is Distributor)
+					{
+						var existingClaim = (await _userManager.GetClaimsAsync(user)).FirstOrDefault(c => c.Type == "UserType");
+						if (existingClaim == null)
+						{
+							await _userManager.AddClaimAsync(user, new Claim("UserType", "Distributor"));
+						}
+					}
+					else if (user is Customer)
+					{
+						var existingClaim = (await _userManager.GetClaimsAsync(user)).FirstOrDefault(c => c.Type == "UserType");
+						if (existingClaim == null)
+						{
+							await _userManager.AddClaimAsync(user, new Claim("UserType", "Customer"));
+						}
+					}
 
-					// Обновете claims в текущата сесия
 					await _signInManager.RefreshSignInAsync(user);
 
 					return LocalRedirect(returnUrl);
