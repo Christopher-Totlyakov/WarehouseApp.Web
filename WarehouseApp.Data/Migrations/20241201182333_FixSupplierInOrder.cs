@@ -33,7 +33,7 @@ namespace WarehouseApp.Data.Migrations
                 column: "SupplierId",
                 principalTable: "Suppliers",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction);
         }
 
         /// <inheritdoc />

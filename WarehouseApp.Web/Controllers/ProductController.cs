@@ -96,17 +96,30 @@ namespace WarehouseApp.Web.Controllers
         [WarehouseWorkerAuthorize]
         public async Task<IActionResult> Add(EditProductViewModel model)
         {
-
             if (!ModelState.IsValid)
             {
                 model.AvailableCategories = await productService.GetAllCategoryAsync();
-
                 return View(model);
+            }
+
+            // Проверка и запис на файла
+            if (model.ImageFile != null)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img");
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ImageFile.FileName;
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await model.ImageFile.CopyToAsync(fileStream);
+                }
+
+                model.ImagePath = $"/img/{uniqueFileName}"; 
             }
 
             bool successfully = await productService.AddProductAsync(model);
 
-            if (!successfully) 
+            if (!successfully)
             {
                 return View(model);
             }

@@ -40,7 +40,7 @@ namespace WarehouseApp.Common
             public const int ProductNameMaxLength = 20;
             public const int ProductNameMinLength = 3;
 
-            public const int ImagePathMaxLength = 20;
+            public const int ImagePathMaxLength = 500;
 
 
             public const int ProductDescriptionMaxLength = 500;

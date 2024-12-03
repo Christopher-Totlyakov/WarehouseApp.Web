@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -41,10 +42,14 @@ namespace WarehouseApp.Web.ViewModels.Product
         public List<int> SelectedCategoryIds { get; set; } = new List<int>();
         public IEnumerable<CategoryViewModel> AvailableCategories { get; set; } = new List<CategoryViewModel>();
 
+        [Display(Name = "Upload Image")]
+        public IFormFile? ImageFile { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<EditProductViewModel, Data.Models.Product>()
                 .ForMember(d => d.ProductCategories, x => x.Ignore());
+
         }
     }
 }

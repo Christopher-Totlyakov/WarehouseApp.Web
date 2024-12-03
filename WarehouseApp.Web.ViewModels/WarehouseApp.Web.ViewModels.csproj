@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WarehouseApp.Common\WarehouseApp.Common.csproj" />
     <ProjectReference Include="..\WarehouseApp.Data.Models\WarehouseApp.Data.Models.csproj" />
     <ProjectReference Include="..\WarehouseApp.Services.Mapping\WarehouseApp.Services.Mapping.csproj" />
