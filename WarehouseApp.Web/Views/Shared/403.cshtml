@@ -1,7 +1,64 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Access Denied";
 }
 
-<h1>403 - Access Denied</h1>
-<p>You do not have permission to access this page.</p>
-<a href="/" class="btn btn-primary">Go to Homepage</a>
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJd4VQJ2+F9QgRr39V0A16R3+24vF0foZ0V6Oa6kkb2Ff4wK4DQ4N5d8f6Ch" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            color: #495057;
+        }
+
+        h1 {
+            font-size: 5rem;
+            color: #dc3545;
+            margin-top: 0;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            font-size: 1.25rem;
+            padding: 15px 30px;
+        }
+
+        .message {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+        img{
+            border: 3px solid black;
+            border-radius: 50px;
+            height: 200px;
+        }
+        a{
+            text-decoration: none;
+            color: white;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>403 - Access Denied</h1>
+        <img src="https://png.pngtree.com/png-clipart/20220823/original/pngtree-anxiety-bullied-from-online-social-media-with-computer-laptop-and-sad-png-image_8470216.png" alt="#" />
+        <p class ="message">You do not have permission to access this page.</p>
+        <a href="/" class="btn btn-primary">Go to Homepage</a>
+    </div>
+</body>
+</html>

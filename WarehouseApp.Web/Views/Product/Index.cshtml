@@ -83,3 +83,22 @@
         }
     </div>
 </div>
+
+
+<nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+        @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
+        {
+            <li class="page-item @(i == (int)ViewData["CurrentPage"] ? "active" : "")">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-minPrice="@ViewData["MinPrice"]"
+                   asp-route-maxPrice="@ViewData["MaxPrice"]"
+                   asp-route-categoryId="@ViewData["SelectedCategoryId"]"
+                   asp-route-currentPage="@i">
+                    @i
+                </a>
+            </li>
+        }
+    </ul>
+</nav>

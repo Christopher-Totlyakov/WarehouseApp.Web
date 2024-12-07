@@ -23,25 +23,30 @@ namespace WarehouseApp.Services.Data
         }
 
 
-        public async Task<IEnumerable<ProductIndexViewModel>> GetAllProductsAsync(decimal minPrice, decimal maxPrice, int? categoryId)
+        public async Task<(IEnumerable<ProductIndexViewModel>, int)> GetAllProductsPagedAsync(decimal minPrice, decimal maxPrice, int? categoryId, int currentPage, int productsPerPage)
         {
             var query = repository
-                 .GetAllAttached<Product>()
-                 .Include(p => p.ProductCategories)
-                 .ThenInclude(pc => pc.Category)
-                 .Where(p => p.SoftDelete != true && p.Price >= minPrice && p.Price <= maxPrice);
+                .GetAllAttached<Product>()
+                .Include(p => p.ProductCategories)
+                .ThenInclude(pc => pc.Category)
+                .Where(p => p.SoftDelete != true && p.Price >= minPrice && p.Price <= maxPrice);
 
             if (categoryId.HasValue)
             {
                 query = query.Where(p => p.ProductCategories.Any(pc => pc.CategoryId == categoryId.Value));
             }
 
+            int totalProducts = await query.CountAsync();
+
             var products = await query
+                .Skip((currentPage - 1) * productsPerPage)
+                .Take(productsPerPage)
                 .To<ProductIndexViewModel>()
                 .ToArrayAsync();
 
-            return products;
+            return (products, totalProducts);
         }
+
 
         public async Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(int id)
         {

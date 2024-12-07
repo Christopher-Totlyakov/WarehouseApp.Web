@@ -18,19 +18,22 @@ namespace WarehouseApp.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(decimal minPrice = 0, decimal maxPrice = 999, int? categoryId = null)
+        public async Task<IActionResult> Index(decimal minPrice = 0, decimal maxPrice = 999, int? categoryId = null, int currentPage = 1)
         {
-            IEnumerable<ProductIndexViewModel> products =
-                await productService.GetAllProductsAsync(minPrice, maxPrice, categoryId);
-            
+            const int ProductsPerPage = 6;
+
+            var (products, totalProducts) = await productService.GetAllProductsPagedAsync(minPrice, maxPrice, categoryId, currentPage, ProductsPerPage);
+
             var categories = await productService.GetAllCategoryAsync();
 
-            
+            int totalPages = (int)Math.Ceiling((double)totalProducts / ProductsPerPage);
+
             ViewData["MinPrice"] = minPrice;
             ViewData["MaxPrice"] = maxPrice;
             ViewData["SelectedCategoryId"] = categoryId;
             ViewData["AvailableCategories"] = categories;
-
+            ViewData["CurrentPage"] = currentPage;
+            ViewData["TotalPages"] = totalPages;
 
             return View(products);
         }
@@ -102,7 +105,6 @@ namespace WarehouseApp.Web.Controllers
                 return View(model);
             }
 
-            // Проверка и запис на файла
             if (model.ImageFile != null)
             {
                 var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img");
