@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WarehouseApp.Data.Models;
 using WarehouseApp.Data.Repository.Interfaces;
 using WarehouseApp.Services.Data.Interfaces;
@@ -37,6 +32,10 @@ namespace WarehouseApp.Services.Data
             }
 
             int totalProducts = await query.CountAsync();
+            if (currentPage < 1)
+            {
+                currentPage = 1;
+            }
 
             var products = await query
                 .Skip((currentPage - 1) * productsPerPage)

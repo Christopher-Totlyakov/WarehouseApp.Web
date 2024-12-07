@@ -110,7 +110,7 @@ namespace WarehouseApp.Web.Areas.Identity.Pages.Account
 				var user = await _userManager.FindByEmailAsync(Input.Email);
 				if (user == null)
 				{
-					ModelState.AddModelError(string.Empty, "Invalid username!");
+					ModelState.AddModelError(string.Empty, "Invalid login attempt!");
 					return Page();
 				}
 
@@ -173,7 +173,7 @@ namespace WarehouseApp.Web.Areas.Identity.Pages.Account
 				}
 				else
 				{
-					ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+					ModelState.AddModelError(string.Empty, "If you are sure that you have created an account with these details, contact our team to verify the authenticity.");
 					return Page();
 				}
 			}
