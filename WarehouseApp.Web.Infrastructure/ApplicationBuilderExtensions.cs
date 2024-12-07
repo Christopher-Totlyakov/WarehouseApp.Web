@@ -243,20 +243,17 @@ namespace WarehouseApp.Web.Infrastructure
                 var dbContext = scope.ServiceProvider.GetRequiredService<WarehouseDbContext>();
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-                // Проверяваме дали вече има заявки в базата
                 if (dbContext.Requests.Any())
                 {
-                    return app; // Ако има заявки, пропускаме сидването
+                    return app; 
                 }
 
-                // Извличаме налични продукти от базата
                 var products = await dbContext.Products.Take(10).ToListAsync();
                 if (!products.Any())
                 {
                     throw new Exception("No products found in the database. Seed products first.");
                 }
 
-                // Извличаме потребители, които могат да бъдат Requesters
                 var requesters = await userManager.Users
                     .Where(u => u is RequesterAndBuyerUser)
                     .Cast<RequesterAndBuyerUser>()
@@ -267,7 +264,6 @@ namespace WarehouseApp.Web.Infrastructure
                     throw new Exception("No requesters found in the database. Seed users first.");
                 }
 
-                // Създаваме списък със заявки
                 var requests = new List<Request>();
 
                 foreach (var requester in requesters)
@@ -281,12 +277,12 @@ namespace WarehouseApp.Web.Infrastructure
                         Note = null,
                         SoftDelete = false,
                         RequestProducts = products
-                            .OrderBy(p => Guid.NewGuid()) // Случайни продукти
-                            .Take(3) // Вземаме до 3 продукта на заявка
+                            .OrderBy(p => Guid.NewGuid()) 
+                            .Take(3) 
                             .Select(p => new RequestProduct
                             {
                                 ProductId = p.Id,
-                                QuantityRequested = new Random().Next(1, 10), // Случайно количество
+                                QuantityRequested = new Random().Next(1, 10), 
                                 PriceUponRequest = p.Price
                             })
                             .ToList()
@@ -295,10 +291,8 @@ namespace WarehouseApp.Web.Infrastructure
                     requests.Add(request);
                 }
 
-                // Добавяме заявките в контекста
                 dbContext.Requests.AddRange(requests);
 
-                // Запазваме промените в базата
                 await dbContext.SaveChangesAsync();
             }
 
