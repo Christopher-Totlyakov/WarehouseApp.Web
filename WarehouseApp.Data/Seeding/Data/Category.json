@@ -1,0 +1,38 @@
+﻿[
+  {
+    "Name": "Laminate Flooring",
+    "SoftDelete": false
+  },
+  {
+    "Name": "Vinyl Flooring",
+    "SoftDelete": false
+  },
+  {
+    "Name": "Hardwood Flooring",
+    "SoftDelete": false
+  },
+  {
+    "Name": "Engineered Wood",
+    "SoftDelete": false
+  },
+  {
+    "Name": "Luxury Vinyl Tile (LVT)",
+    "SoftDelete": false
+  },
+  {
+    "Name": "Parquet Flooring",
+    "SoftDelete": false
+  },
+  {
+    "Name": "Bamboo Flooring",
+    "SoftDelete": false
+  },
+  {
+    "Name": "Stone Effect Flooring",
+    "SoftDelete": false
+  },
+  {
+    "Name": "Outdoor Flooring",
+    "SoftDelete": false
+  }
+]

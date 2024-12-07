@@ -80,7 +80,7 @@ namespace WarehouseApp.Web.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]

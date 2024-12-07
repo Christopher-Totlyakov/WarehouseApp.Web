@@ -1,0 +1,82 @@
+﻿[
+  {
+    "Name": "Oak Laminate 12mm",
+    "ImagePath": "https://images.factory-direct-flooring.co.uk/media/catalog/product/cache/20396aad2b393f273b3164534ad203bd/p/r/prestige-plus-12mm-shadow-oak-ac5-click-laminate-floor-4956-xl-lifestyle-1.jpg",
+    "Description": "Durable 12mm laminate flooring with an oak finish, perfect for high-traffic areas.",
+    "Price": 25.99,
+    "StockQuantity": 150,
+    "SoftDelete": false
+  },
+  {
+    "Name": "Walnut Vinyl 8mm",
+    "ImagePath": "/img/walnut-vinyl-8mm.jpg",
+    "Description": "Water-resistant vinyl flooring with a walnut finish, ideal for kitchens and bathrooms.",
+    "Price": 18.75,
+    "StockQuantity": 300,
+    "SoftDelete": false
+  },
+  {
+    "Name": "Herringbone Parquet",
+    "ImagePath": "/img/herringbone-parquet.jpg",
+    "Description": "Classic herringbone parquet flooring made from engineered wood for a premium look.",
+    "Price": 45.00,
+    "StockQuantity": 100,
+    "SoftDelete": false
+  },
+  {
+    "Name": "Bamboo Hardwood",
+    "ImagePath": "/img/bamboo-hardwood.jpg",
+    "Description": "Eco-friendly bamboo hardwood flooring, ideal for a natural and sustainable home design.",
+    "Price": 32.50,
+    "StockQuantity": 200,
+    "SoftDelete": false
+  },
+  {
+    "Name": "Grey Laminate 10mm",
+    "ImagePath": "/img/grey-laminate-10mm.jpg",
+    "Description": "Modern grey laminate flooring with a 10mm thickness, suitable for any room.",
+    "Price": 22.00,
+    "StockQuantity": 250,
+    "SoftDelete": false
+  },
+  {
+    "Name": "Luxury Vinyl",
+    "ImagePath": "/img/lvt-marble.jpg",
+    "Description": "Premium LVT with a marble effect, offering a luxurious and durable surface.",
+    "Price": 29.99,
+    "StockQuantity": 180,
+    "SoftDelete": false
+  },
+  {
+    "Name": "Maple Engineered Wood",
+    "ImagePath": "/img/maple-wood.jpg",
+    "Description": "Beautiful maple engineered wood flooring with a glossy finish for elegant interiors.",
+    "Price": 49.99,
+    "StockQuantity": 90,
+    "SoftDelete": false
+  },
+  {
+    "Name": "Cherry Laminate 8mm",
+    "ImagePath": "/img/cherry-laminate.jpg",
+    "Description": "Affordable cherry laminate flooring, easy to install and maintain.",
+    "Price": 19.50,
+    "StockQuantity": 300,
+    "SoftDelete": false
+  },
+  {
+    "Name": "Natural Stone Effect Vinyl",
+    "ImagePath": "/img/stone-effect-vinyl.jpg",
+    "Description": "Vinyl flooring with a natural stone effect, great for outdoor and indoor use.",
+    "Price": 26.00,
+    "StockQuantity": 220,
+    "SoftDelete": false
+  },
+  {
+    "Name": "Rustic Oak Engineered",
+    "ImagePath": "/img/rustic-oak.jpg",
+    "Description": "Rustic oak engineered flooring with a textured surface for a traditional feel.",
+    "Price": 39.00,
+    "StockQuantity": 130,
+    "SoftDelete": false
+  }
+]
