@@ -219,7 +219,8 @@ namespace WarehouseApp.Web.Areas.Identity.Pages.Account
                             UserName = Input.UserName,
                             Email = Input.Email,
                             FirstName = Input.FirstName,
-                            LastName = Input.LastName
+                            LastName = Input.LastName,
+                            IsActivate = true
                         };
                         break;
 
@@ -296,9 +297,14 @@ namespace WarehouseApp.Web.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                        if (user.IsActivate)
+                        {
+                            var userId = await _userManager.GetUserIdAsync(user);
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            return LocalRedirect(returnUrl);
+                        }
+
+                    return RedirectToAction("Index", "Home", new { area = "" });
                 }
 
                 foreach (var error in result.Errors)

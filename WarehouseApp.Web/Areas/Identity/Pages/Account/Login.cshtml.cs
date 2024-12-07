@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using WarehouseApp.Data.Models.Users;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace WarehouseApp.Web.Areas.Identity.Pages.Account
 {
@@ -113,8 +114,14 @@ namespace WarehouseApp.Web.Areas.Identity.Pages.Account
 					return Page();
 				}
 
-				var result = await _signInManager.PasswordSignInAsync(user.UserName!, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-				if (result.Succeeded)
+				Microsoft.AspNetCore.Identity.SignInResult result = null;
+
+                if (user.IsActivate)
+				{
+					result = await _signInManager.PasswordSignInAsync(user.UserName!, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+				}
+
+				if (result != null && result.Succeeded)
 				{
 					_logger.LogInformation("User logged in.");
 
@@ -154,12 +161,12 @@ namespace WarehouseApp.Web.Areas.Identity.Pages.Account
 					await _signInManager.RefreshSignInAsync(user);
 
 					return LocalRedirect(returnUrl);
-				}
-				if (result.RequiresTwoFactor)
+                }
+				if (result != null && result.RequiresTwoFactor)
 				{
 					return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
 				}
-				if (result.IsLockedOut)
+				if (result != null &&  result.IsLockedOut)
 				{
 					_logger.LogWarning("User account locked out.");
 					return RedirectToPage("./Lockout");
@@ -171,7 +178,6 @@ namespace WarehouseApp.Web.Areas.Identity.Pages.Account
 				}
 			}
 
-			// If we got this far, something failed, redisplay form
 			return Page();
 		}
 	}

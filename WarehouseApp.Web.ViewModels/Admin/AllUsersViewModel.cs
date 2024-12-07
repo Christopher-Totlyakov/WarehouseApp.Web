@@ -19,5 +19,7 @@ namespace WarehouseApp.Web.ViewModels.Admin
 
         public bool IsPersonalDataDeleted { get; set; }
 
+        public bool IsActivate { get; set; }
+
     }
 }

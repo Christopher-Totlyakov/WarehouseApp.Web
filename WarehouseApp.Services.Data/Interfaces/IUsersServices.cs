@@ -14,5 +14,7 @@ namespace WarehouseApp.Services.Data.Interfaces
         Task<UserDetailsViewModel> GetUserByIdAsync(string userId);
 
         Task<bool> DeletePersonalDataAsync(string userId);
+
+        Task ChangeAccountAsync(string userId);
     }
 }

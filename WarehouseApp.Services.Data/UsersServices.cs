@@ -44,7 +44,8 @@ namespace WarehouseApp.Services.Data
                     Id = user.Id.ToString(),
                     Email = user.Email,
                     UserType = user.GetType().Name,
-                    IsPersonalDataDeleted = isPersonalDataDeleted
+                    IsPersonalDataDeleted = isPersonalDataDeleted,
+                    IsActivate = user.IsActivate
                 });
             }
 
@@ -149,7 +150,25 @@ namespace WarehouseApp.Services.Data
             return result.Succeeded;
         }
 
+        public async Task ChangeAccountAsync(string userId)
+        {
+            var id = Guid.Parse(userId);
+            var user = await this.userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
+            if (user == null)
+            {
+                return;
+            }
 
+            if (user.IsActivate == true)
+            {
+                user.IsActivate = false;
+            }
+            else
+            {
+                user.IsActivate = true;
+            }
+            await userManager.UpdateAsync(user);
+        }
 
     }
 }

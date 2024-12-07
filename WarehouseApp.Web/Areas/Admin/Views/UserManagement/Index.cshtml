@@ -10,6 +10,7 @@
                 <th>Email</th>
                 <th>User Type</th>
                 <th>Personal Data Status</th>
+                <th>Active account </th>
             </tr>
         </thead>
         <tbody>
@@ -32,9 +33,28 @@
                                 <span class="text-success">Active</span>
                             }
                         </td>
+                        <td>@if (user.IsActivate)
+                            {
+                                <span class="text-success">Yes</span>
+                            }
+                            else
+                            {
+                                <span class="text-danger">No</span>
+                            }
+                        </td>
                         <td>
                             <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@user.Id">View Details</a>
                             <a class="btn btn-danger btn-sm" asp-action="DeletePersonalData" asp-route-id="@user.Id">Delete Personal Data</a>
+
+                            @if (user.IsActivate)
+                            {
+                                <a class="btn btn-danger btn-sm" asp-action="DeactivateAccount" asp-route-id="@user.Id">Deactivate Account</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-success btn-sm" asp-action="ActivateAccount" asp-route-id="@user.Id">Activate Account</a>
+                            }
+                            
                         </td>
                     </tr>
                     index++;

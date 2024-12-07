@@ -59,5 +59,31 @@ namespace WarehouseApp.Web.Areas.Admin.Controllers
             TempData["SuccessMessage"] = "Personal data deleted successfully.";
             return RedirectToAction("Details", new { id });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ActivateAccount(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
+            await userService.ChangeAccountAsync(id);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeactivateAccount(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
+            await userService.ChangeAccountAsync(id);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
