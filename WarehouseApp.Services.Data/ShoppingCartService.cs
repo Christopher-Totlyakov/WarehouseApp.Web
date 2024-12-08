@@ -137,7 +137,6 @@ namespace WarehouseApp.Services.Data
             }
             if (inStockItems.Any())
             {
-                // Create a new Sale record
                 var sale = new WarehouseApp.Data.Models.Sale
                 {
                     CustomerId = parsedGuid,
@@ -199,10 +198,9 @@ namespace WarehouseApp.Services.Data
             {
                 return false;
             }
-            // Прехвърлете данните към модел за базата данни (ако е необходимо)
             var request = new WarehouseApp.Data.Models.Request
             {
-                RequesterId = parsedGuid, // Метод за извличане на текущия потребител
+                RequesterId = parsedGuid,
                 RequestDate = DateTime.UtcNow,
                 Status = "Pending",
 
