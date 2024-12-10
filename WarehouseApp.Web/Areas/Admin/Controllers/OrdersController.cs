@@ -6,6 +6,8 @@ using WarehouseApp.Services.Data.Interfaces;
 using WarehouseApp.Web.Authorize;
 using WarehouseApp.Web.ViewModels.Orders;
 
+using static WarehouseApp.Common.Messages;
+
 namespace WarehouseApp.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
@@ -61,7 +63,8 @@ namespace WarehouseApp.Web.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Suppliers = await orderService.GetAllSuppliersAsync();
+				TempData[ErrorMessage] = "Failed to Create";
+				ViewBag.Suppliers = await orderService.GetAllSuppliersAsync();
                 //model.AvailableProducts = await orderService.GetAllAvailableProductsAsync();
 
                 return View(model);
@@ -81,23 +84,28 @@ namespace WarehouseApp.Web.Areas.Admin.Controllers
 
             if (String.IsNullOrWhiteSpace(idUser))
             {
-                RedirectToAction(nameof(Index));
+				TempData[ErrorMessage] = "Failed to Create";
+				RedirectToAction(nameof(Index));
             }
 
             bool isGuidValid = Guid.TryParse(idUser, out Guid parsedGuid);
             if (!isGuidValid)
             {
-                RedirectToAction(nameof(Index));
+				TempData[ErrorMessage] = "Failed to Create";
+				RedirectToAction(nameof(Index));
             }
 
             bool isSucceeded = await orderService.AddOrderAsync(model, parsedGuid);
             if (!isSucceeded)
             {
-                ViewBag.Suppliers = await orderService.GetAllSuppliersAsync();
+				TempData[ErrorMessage] = "Failed to Create";
+				ViewBag.Suppliers = await orderService.GetAllSuppliersAsync();
 
                 return View(model);
             }
-            return RedirectToAction(nameof(Index));
+
+			TempData[SuccessMessage] = "Successfully Create";
+			return RedirectToAction(nameof(Index));
         }
         [HttpGet]
         public async Task<IActionResult> EditStatus(int Id)
@@ -125,17 +133,20 @@ namespace WarehouseApp.Web.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("EditStatus", model);
+				TempData[ErrorMessage] = "Failed to Update Status";
+				return View("EditStatus", model);
             }
 
             bool isSucceeded = await orderService.EditOrderStatusAsync(model);
 
             if (!isSucceeded)
             {
-                return View(model);
+				TempData[ErrorMessage] = "Failed to Update Status";
+				return View(model);
             }
 
-            return RedirectToAction(nameof(Index)); 
+			TempData[SuccessMessage] = "Successfully Update Status";
+			return RedirectToAction(nameof(Index)); 
         }
 
 

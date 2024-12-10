@@ -76,13 +76,15 @@ namespace WarehouseApp.Web.Infrastructure
                 await SeedUserAsync(userManager, userStore, "customer1@test.com", "John", "q123456", "Customer", new Customer
                 {
                     FirstName = "John",
-                    LastName = "Doe"
+                    LastName = "Doe",
+                    IsActivate = true
                 });
 
                 await SeedUserAsync(userManager, userStore, "customer2@test.com", "Jane", "q123456", "Customer", new Customer
                 {
                     FirstName = "Jane",
-                    LastName = "Smith"
+                    LastName = "Smith",
+                    IsActivate = true
                 });
 
                 await SeedUserAsync(userManager, userStore, "distributor1@test.com", "DistribCorp", "q123456", "Distributor", new Distributor
@@ -94,7 +96,8 @@ namespace WarehouseApp.Web.Infrastructure
                     CompanyPhoneNumber = "123-456-7890",
                     BusinessAddress = "123 Distribution Way",
                     LicenseExpirationDate = DateTime.UtcNow.AddYears(1),
-                    DiscountRate = 10
+                    DiscountRate = 10,
+                    IsActivate = true
                 });
 
                 await SeedUserAsync(userManager, userStore, "distributor2@test.com", "DistribLLC", "q123456", "Distributor", new Distributor
@@ -106,28 +109,32 @@ namespace WarehouseApp.Web.Infrastructure
                     CompanyPhoneNumber = "098-765-4321",
                     BusinessAddress = "456 Supplier Rd",
                     LicenseExpirationDate = DateTime.UtcNow.AddYears(2),
-                    DiscountRate = 15
+                    DiscountRate = 15,
+                    IsActivate = true
                 });
 
                 await SeedUserAsync(userManager, userStore, "supplier1@test.com", "SupplyHouse", "q123456", "Supplier", new Supplier
                 {
                     CompanyName = "SupplyHouse",
                     factoryLocation = "Factory A",
-                    PreferredDeliveryMethod = "Truck"
+                    PreferredDeliveryMethod = "Truck",
+                    IsActivate = true
                 });
 
                 await SeedUserAsync(userManager, userStore, "supplier2@test.com", "SupplierCo", "q123456", "Supplier", new Supplier
                 {
                     CompanyName = "SupplierCo",
                     factoryLocation = "Factory B",
-                    PreferredDeliveryMethod = "Air Freight"
+                    PreferredDeliveryMethod = "Air Freight",
+                    IsActivate = true
                 });
 
                 await SeedUserAsync(userManager, userStore, "worker1@test.com", "Alice", "q123456", "WarehouseWorker", new WarehouseWorker
                 {
                     FirstName = "Alice",
                     LastName = "Green",
-                    StartWork = DateTime.UtcNow.AddMonths(-6)
+                    StartWork = DateTime.UtcNow.AddMonths(-6),
+                    IsActivate = true
                 });
 
                 await SeedUserAsync(userManager, userStore, "worker2@test.com", "Bob", "q123456", "WarehouseWorker", new WarehouseWorker
@@ -135,7 +142,8 @@ namespace WarehouseApp.Web.Infrastructure
                     FirstName = "Bob",
                     LastName = "Brown",
                     StartWork = DateTime.UtcNow.AddYears(-1),
-                    EndWork = DateTime.UtcNow.AddMonths(-3)
+                    EndWork = DateTime.UtcNow.AddMonths(-3),
+                    IsActivate = true
                 });
             }).GetAwaiter().GetResult();
 
@@ -162,12 +170,6 @@ namespace WarehouseApp.Web.Infrastructure
             {
                 throw new InvalidOperationException($"Error creating user {username}: {string.Join(", ", result.Errors.Select(e => e.Description))}");
             }
-
-            //bool roleExists = await userManager.IsInRoleAsync(user, role);
-            //if (!roleExists)
-            //{
-            //    await userManager.AddToRoleAsync(user, role);
-            //}
         }
 
         public static async Task<IApplicationBuilder> SeedMessagesAsync(this IApplicationBuilder app,IServiceProvider serviceProvider)

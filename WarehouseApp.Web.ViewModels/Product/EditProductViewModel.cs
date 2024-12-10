@@ -43,6 +43,7 @@ namespace WarehouseApp.Web.ViewModels.Product
         public IEnumerable<CategoryViewModel> AvailableCategories { get; set; } = new List<CategoryViewModel>();
 
         [Display(Name = "Upload Image")]
+        [FileExtensions(Extensions = "jpg,jpeg,png,gif", ErrorMessage = "Please upload a valid image file (jpg, jpeg, png, gif).")]
         public IFormFile? ImageFile { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)

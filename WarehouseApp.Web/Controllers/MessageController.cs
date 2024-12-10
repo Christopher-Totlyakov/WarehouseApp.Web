@@ -12,6 +12,8 @@ using WarehouseApp.Web.Authorize;
 using WarehouseApp.Web.ViewModels.Message;
 using WarehouseApp.Web.ViewModels.Orders;
 
+using static WarehouseApp.Common.Messages;
+
 namespace WarehouseApp.Web.Controllers
 {
     [Authorize]   
@@ -73,9 +75,9 @@ namespace WarehouseApp.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(message);
+				TempData[ErrorMessage] = "Failed to Send Message";
+				return View(message);
             }
-            //TODO validacia parst guid
            var idUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             if (String.IsNullOrWhiteSpace(idUser))
@@ -83,17 +85,17 @@ namespace WarehouseApp.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            // Invalid parameter in the URL
             bool isGuidValid = Guid.TryParse(idUser, out Guid parsedGuid);
             if (!isGuidValid)
             {
-                RedirectToAction(nameof(Index));
+				TempData[ErrorMessage] = "Failed to Send Message";
+				RedirectToAction(nameof(Index));
             }
 
 
             messageService.SendMess(message, parsedGuid);
-
-            return RedirectToAction(nameof(Index));
+			TempData[SuccessMessage] = "Successfully Send Message";
+			return RedirectToAction(nameof(Index));
         }
         [HttpGet]
         [WarehouseWorkerAuthorize]
@@ -123,17 +125,21 @@ namespace WarehouseApp.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("EditStatus", model);
+				TempData[ErrorMessage] = "Failed to Update Status";
+				return View("EditStatus", model);
             }
 
             bool isSucceeded = await messageService.EditMessagesStatusAsync(model);
 
             if (!isSucceeded)
             {
-                return View(model);
+				TempData[ErrorMessage] = "Failed to Update Status";
+				return View(model);
             }
 
-            return RedirectToAction(nameof(Index));
+
+			TempData[SuccessMessage] = "Successfully Update Status";
+			return RedirectToAction(nameof(Index));
         }
 
     }

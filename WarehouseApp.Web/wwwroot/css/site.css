@@ -18,5 +18,66 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-bottom: 60px;
+    background: repeating-linear-gradient(-45deg, #e1fc00, #21883869 1px, #6957572e 1px, #00000036 10px);
+    color: green
 }
+img {
+    height: 190px;
+}
+
+.info-home {
+    display: flex;
+    justify-content:space-around;
+    
+}
+.logo-header {
+    max-height: 60px;
+    border-radius: 50px;
+    margin-right: 15px
+}
+
+table {
+    background-color: #fdfdfda3;
+}
+label {
+    color:black;
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.card-text {
+    color: #666;
+}
+
+.card-hover:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+    .card-hover:hover .card-img-top {
+        transform: scale(1.05);
+    }
+

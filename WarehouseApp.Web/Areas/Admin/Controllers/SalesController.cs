@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using WarehouseApp.Services.Data.Interfaces;
 using WarehouseApp.Web.Authorize;
 
+using static WarehouseApp.Common.Messages;
+
 namespace WarehouseApp.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
@@ -15,16 +17,21 @@ namespace WarehouseApp.Web.Areas.Admin.Controllers
         {
             salesService = _salesService;
         }
-
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var sales = await salesService.GetAllSalesAsync();
             return View(sales);
         }
-
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             var saleDetails = await salesService.GetSaleDetailsAsync(id);
+            if (saleDetails.CustomerName == null) 
+            {
+				TempData[ErrorMessage] = "No such sale";
+				return RedirectToAction(nameof(Index));
+            }
             return View(saleDetails);
         }
     }

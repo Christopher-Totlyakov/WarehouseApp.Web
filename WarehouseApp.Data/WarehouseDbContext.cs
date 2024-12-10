@@ -50,9 +50,7 @@ namespace WarehouseApp.Data
             modelBuilder.Entity<Supplier>().ToTable("Suppliers");
             modelBuilder.Entity<WarehouseWorker>().ToTable("WarehouseWorkers");
 
-            // Основната таблица за общите данни
             modelBuilder.Entity<ApplicationUser>().ToTable("AspNetUsers");
-
         }
     }
 }

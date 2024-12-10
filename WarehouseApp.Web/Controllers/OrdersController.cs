@@ -4,6 +4,8 @@ using WarehouseApp.Data.Models.Interfaces;
 using WarehouseApp.Services.Data.Interfaces;
 using WarehouseApp.Web.Authorize;
 
+using static WarehouseApp.Common.Messages;
+
 namespace WarehouseApp.Web.Controllers
 {
 	[SuppliersAuthorize]
@@ -43,6 +45,7 @@ namespace WarehouseApp.Web.Controllers
 
 			if (orderDetails == null)
 			{
+				TempData[ErrorMessage] = "Details Failed";
 				return NotFound();
 			}
 

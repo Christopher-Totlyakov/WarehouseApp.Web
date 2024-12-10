@@ -1,8 +1,86 @@
-﻿@{
+﻿@using WarehouseApp.Web.ViewModels.Home
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+@model HomeViewModel
+
+<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="display-4 text-success font-weight-bold">Welcome to Our Warehouse Store!</h1>
+        <p class="lead text-muted">Manage your inventory efficiently and quickly. Explore our product categories and make your orders easily and fast.</p>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="jumbotron jumbotron-fluid hero-bg">
+                <div class="container text-center">
+                    <h2 class="display-3 font-weight-bold">Shop with Ease</h2>
+                    <p class="lead text-muted">We offer quick and easy navigation through products and your orders.</p>
+                    <a href="@Url.Action("Index", "Product")" class="btn btn-success btn-lg btn-cta">Start Shopping</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Products Section -->
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <h2 class="display-4">Top Products</h2>
+            <p class="lead text-muted">Explore our most popular products!</p>
+        </div>
+
+        @foreach (var product in Model.TopProducts)
+        {
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm border-0 rounded-lg card-hover">
+                    <img src="@product.ImagePath" class="card-img-top" alt="@product.Name">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">@product.Name</h5>
+                        <p class="card-text">$@product.Price</p>
+                        <a href="@Url.Action("Details", "Product", new { id = product.Id })" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- New Products Section -->
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <h2 class="display-4">New Products</h2>
+            <p class="lead text-muted">Check out the latest arrivals to our store!</p>
+        </div>
+
+        @foreach (var product in Model.NewProducts)
+        {
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm border-0 rounded-lg card-hover">
+                    <img src="@product.ImagePath" class="card-img-top" alt="@product.Name">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">@product.Name</h5>
+                        <p class="card-text">$@product.Price</p>
+                        <a href="@Url.Action("Details", "Product", new { id = product.Id })" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+        
+    <div class=" mt-5 info-home">
+
+        <div class="text-center" >
+            <h5 class="card-title title-home">Shopping Cart</h5>
+
+            <a href="@Url.Action("Index", "ShoppingCart")" class="btn btn-success btn-lg btn-cta">View Cart</a>
+        </div>
+        <div class="text-center">
+            <h5 class="card-title title-home">Have any questions?</h5>
+            <p><a href="@Url.Action("Index", "Message")" class="btn btn-success btn-lg btn-cta">Send a Message</a></p>
+        </div>
+    </div>
+
 </div>

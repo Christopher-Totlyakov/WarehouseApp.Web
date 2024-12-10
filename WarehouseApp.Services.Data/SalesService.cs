@@ -43,7 +43,11 @@ namespace WarehouseApp.Services.Data
                 .ThenInclude(sp => sp.Product)
                 .FirstOrDefaultAsync(s => s.SaleId == saleId);
 
-            if (sale == null) throw new ArgumentException("Sale not found.");
+            if (sale == null) 
+            {
+				return new SaleDetailsViewModel();
+
+			} 
 
             return new SaleDetailsViewModel
             {

@@ -64,7 +64,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Error/403";
 });
 
-
+builder.Services.AddScoped<WarehouseDbContext>();
 builder.Services.AddScoped<IRepository, WarehouseApp.Data.Repository.Repository>();
 
 builder.Services.AddScoped<IProductService, ProductService>();

@@ -5,6 +5,8 @@ using WarehouseApp.Services.Data.Interfaces;
 using WarehouseApp.Web.Authorize;
 using WarehouseApp.Web.ViewModels.Admin;
 
+using static WarehouseApp.Common.Messages;
+
 namespace WarehouseApp.Web.Areas.Admin.Controllers
 {
 	[Area("Admin")]
@@ -52,11 +54,11 @@ namespace WarehouseApp.Web.Areas.Admin.Controllers
 
             if (!result)
             {
-                TempData["ErrorMessage"] = "Failed to delete personal data.";
+				TempData[ErrorMessage] = "Failed to delete personal data.";
                 return RedirectToAction("Details", new { id });
             }
 
-            TempData["SuccessMessage"] = "Personal data deleted successfully.";
+            TempData[SuccessMessage] = "Personal data deleted successfully.";
             return RedirectToAction("Details", new { id });
         }
 
@@ -70,7 +72,8 @@ namespace WarehouseApp.Web.Areas.Admin.Controllers
 
             await userService.ChangeAccountAsync(id);
 
-            return RedirectToAction(nameof(Index));
+			TempData[SuccessMessage] = "Successfully Activate Account";
+			return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
@@ -83,7 +86,9 @@ namespace WarehouseApp.Web.Areas.Admin.Controllers
 
             await userService.ChangeAccountAsync(id);
 
-            return RedirectToAction(nameof(Index));
+
+			TempData[SuccessMessage] = "Successfully Deactivate Account";
+			return RedirectToAction(nameof(Index));
         }
     }
 }

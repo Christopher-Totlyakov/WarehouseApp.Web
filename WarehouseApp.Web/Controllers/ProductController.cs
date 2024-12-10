@@ -5,6 +5,7 @@ using WarehouseApp.Services.Data.Interfaces;
 using WarehouseApp.Web.Authorize;
 using WarehouseApp.Web.ViewModels.Category;
 using WarehouseApp.Web.ViewModels.Product;
+using static WarehouseApp.Common.Messages;
 
 namespace WarehouseApp.Web.Controllers
 {
@@ -72,25 +73,27 @@ namespace WarehouseApp.Web.Controllers
             if (!ModelState.IsValid)
             {
                 model.AvailableCategories = await productService.GetAllCategoryAsync();
-                    
-                return View(model);
+				TempData[ErrorMessage] = "Failed to Edit";
+				return View(model);
             }
 
             bool successfully = await productService.SaveProductAsync( model);
 
             if (!successfully)
             {
-                return View(model);
+				TempData[ErrorMessage] = "Failed to Edit";
+				return View(model);
             }
 
-            return RedirectToAction(nameof(Index));
+			TempData[SuccessMessage] = "Successfully Edited";
+			return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         [WarehouseWorkerAuthorize]
         public async Task<IActionResult> Add()
         {
-            var model = new EditProductViewModel();
+			var model = new EditProductViewModel();
             model.AvailableCategories = await productService.GetAllCategoryAsync();
 
             return View(model);
@@ -99,10 +102,12 @@ namespace WarehouseApp.Web.Controllers
         [WarehouseWorkerAuthorize]
         public async Task<IActionResult> Add(EditProductViewModel model)
         {
-            if (!ModelState.IsValid)
+
+			if (!ModelState.IsValid)
             {
                 model.AvailableCategories = await productService.GetAllCategoryAsync();
-                return View(model);
+				TempData[ErrorMessage] = "Failed to add";
+				return View(model);
             }
 
             if (model.ImageFile != null)
@@ -123,10 +128,11 @@ namespace WarehouseApp.Web.Controllers
 
             if (!successfully)
             {
+                TempData[ErrorMessage] = "Failed to add";
                 return View(model);
             }
-
-            return RedirectToAction("Index");
+			TempData[SuccessMessage] = "Successfully added";
+			return RedirectToAction("Index");
         }
         [HttpGet]
         [WarehouseWorkerAuthorize]
@@ -136,10 +142,12 @@ namespace WarehouseApp.Web.Controllers
             
             if (!IsSuccess) 
             {
-                return RedirectToAction(nameof(Index));
+				TempData[ErrorMessage] = "Failed to Delete";
+				return RedirectToAction(nameof(Index));
             }
 
-            return RedirectToAction(nameof(Index));
+			TempData[SuccessMessage] = "Successfully Deleted";
+			return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -8,6 +8,7 @@ using WarehouseApp.Services.Data;
 using WarehouseApp.Services.Data.Interfaces;
 using WarehouseApp.Web.Authorize;
 using WarehouseApp.Web.ViewModels.ShoppingCart;
+using static WarehouseApp.Common.Messages;
 
 namespace WarehouseApp.Web.Controllers
 {
@@ -47,7 +48,11 @@ namespace WarehouseApp.Web.Controllers
         [HttpPost]
         public IActionResult AddToCart(AddToCartViewModel model)
         {
-            
+            if (!ModelState.IsValid)
+            {
+				TempData[ErrorMessage] = "Failed to Added";
+				return View(model);
+            }
             var cartCookie = Request.Cookies["ShoppingCart"];
 
             var cart = shoppingCartService.AddProductsInCooke(model, cartCookie);
@@ -59,8 +64,8 @@ namespace WarehouseApp.Web.Controllers
             };
 
             Response.Cookies.Append("ShoppingCart", JsonSerializer.Serialize(cart), options);
-
-            return RedirectToAction(nameof(Index));
+			TempData[SuccessMessage] = "Successfully Added";
+			return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
@@ -90,15 +95,20 @@ namespace WarehouseApp.Web.Controllers
 
             if (model == null) 
             {
-                return RedirectToAction(nameof(Index));
+				TempData[ErrorMessage] = "Failed to Edit";
+				return RedirectToAction(nameof(Index));
             }
-            
-            return View(model);
+			
+			return View(model);
         }
 
         [HttpPost]
         public IActionResult EditCartItem(AddToCartViewModel model)
         {
+            if (!ModelState.IsValid) 
+            {
+				TempData[ErrorMessage] = "Failed to Edit";
+			}
             var cartCookie = Request.Cookies["ShoppingCart"];
 
             var cart = shoppingCartService.SetEditItemInCart(cartCookie, model);
@@ -111,7 +121,8 @@ namespace WarehouseApp.Web.Controllers
 
             Response.Cookies.Append("ShoppingCart", JsonSerializer.Serialize(cart), options);
 
-            return RedirectToAction(nameof(Index));
+			TempData[SuccessMessage] = "Successfully Edit";
+			return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
@@ -120,7 +131,8 @@ namespace WarehouseApp.Web.Controllers
             var cartCookie = Request.Cookies["ShoppingCart"];
             if (cartCookie == null)
             {
-                TempData["Error"] = "Your cart is empty!";
+				TempData[ErrorMessage] = "Failed to Purchase";
+				TempData["Error"] = "Your cart is empty!";
                 return RedirectToAction("Index");
             }
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -129,7 +141,9 @@ namespace WarehouseApp.Web.Controllers
 
             Response.Cookies.Append("ShoppingCart", JsonSerializer.Serialize(remainingItems));
 
-            TempData["Success"] = "Transaction completed successfully!";
+
+			TempData[SuccessMessage] = "Successfully Purchase";
+			TempData["Success"] = "Transaction completed successfully!";
             return RedirectToAction("Index");
         }
 
@@ -139,7 +153,8 @@ namespace WarehouseApp.Web.Controllers
             var cartCookie = Request.Cookies["ShoppingCart"];
             if (cartCookie == null)
             {
-                TempData["Error"] = "Your cart is empty!";
+				TempData[ErrorMessage] = "Your cart is empty!";
+				TempData["Error"] = "Your cart is empty!";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -149,13 +164,16 @@ namespace WarehouseApp.Web.Controllers
 
             if (!isSucceeded)
             {
-                TempData["Error"] = "Error!";
+				TempData[ErrorMessage] = "Failed to Create Request!";
+				TempData["Error"] = "Error!";
                 return RedirectToAction(nameof(Index));
             }
 
             Response.Cookies.Delete("ShoppingCart");
 
-            TempData["Success"] = "Request created successfully!";
+
+			TempData[SuccessMessage] = "Request created successfully!";
+			TempData["Success"] = "Request created successfully!";
             return RedirectToAction(nameof(Index));
         }
     }
