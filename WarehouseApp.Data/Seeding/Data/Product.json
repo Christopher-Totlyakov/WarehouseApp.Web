@@ -9,7 +9,7 @@
   },
   {
     "Name": "Walnut Vinyl 8mm",
-    "ImagePath": "/img/walnut-vinyl-8mm.jpg",
+    "ImagePath": "https://www.kensyard.co.uk/wp-content/uploads/2023/07/ELV358_Interior-B2B-Square-XXL.jpg",
     "Description": "Water-resistant vinyl flooring with a walnut finish, ideal for kitchens and bathrooms.",
     "Price": 18.75,
     "StockQuantity": 300,
@@ -17,7 +17,7 @@
   },
   {
     "Name": "Herringbone Parquet",
-    "ImagePath": "/img/herringbone-parquet.jpg",
+    "ImagePath": "https://www.lumberkingflooring.co.uk/media/catalog/category/herringbone-parquet-flooring_1.jpg",
     "Description": "Classic herringbone parquet flooring made from engineered wood for a premium look.",
     "Price": 45.00,
     "StockQuantity": 100,
@@ -25,7 +25,7 @@
   },
   {
     "Name": "Bamboo Hardwood",
-    "ImagePath": "/img/bamboo-hardwood.jpg",
+    "ImagePath": "https://www.thespruce.com/thmb/19bH8tgCBiKUYV992VvBMvFl1Fo=/1495x0/filters:no_upscale():max_bytes(150000):strip_icc()/benefits-and-drawbacks-of-bamboo-floors-1314694_hero_0070-8eaac0f3cc5543c7a73bd85f4106d841.jpg",
     "Description": "Eco-friendly bamboo hardwood flooring, ideal for a natural and sustainable home design.",
     "Price": 32.50,
     "StockQuantity": 200,
@@ -33,7 +33,7 @@
   },
   {
     "Name": "Grey Laminate 10mm",
-    "ImagePath": "/img/grey-laminate-10mm.jpg",
+    "ImagePath": "https://www.ukflooringdirect.co.uk/cdn/shop/files/Woods_Professional_10mm_Laminate_Flooring_Harbour_Oak_Greys_01_retail_1200x1200.jpg?v=1728046917",
     "Description": "Modern grey laminate flooring with a 10mm thickness, suitable for any room.",
     "Price": 22.00,
     "StockQuantity": 250,
@@ -41,7 +41,7 @@
   },
   {
     "Name": "Luxury Vinyl",
-    "ImagePath": "/img/lvt-marble.jpg",
+    "ImagePath": "https://www.flooringamerica.com/root/clientimages/MF7979WEB/html/page-5045/luxury%20vinyl%20plank%20image%201.jpg?rnd=301",
     "Description": "Premium LVT with a marble effect, offering a luxurious and durable surface.",
     "Price": 29.99,
     "StockQuantity": 180,
@@ -49,7 +49,7 @@
   },
   {
     "Name": "Maple Engineered Wood",
-    "ImagePath": "/img/maple-wood.jpg",
+    "ImagePath": "https://uafloors.com/storage/upload/product/image/2022-06-28/HmtVrB6IWegrvTPrMbIylDPOx6c53SGCuwdmbT2C.jpeg",
     "Description": "Beautiful maple engineered wood flooring with a glossy finish for elegant interiors.",
     "Price": 49.99,
     "StockQuantity": 90,
@@ -57,7 +57,7 @@
   },
   {
     "Name": "Cherry Laminate 8mm",
-    "ImagePath": "/img/cherry-laminate.jpg",
+    "ImagePath": "https://kosmos.vn/wp-content/uploads/2024/01/san-go-anh-dao-duoc-danh-gia-cao-ve-tham-my-va-chat-luong.jpg",
     "Description": "Affordable cherry laminate flooring, easy to install and maintain.",
     "Price": 19.50,
     "StockQuantity": 300,
@@ -65,7 +65,7 @@
   },
   {
     "Name": "Natural Stone Effect Vinyl",
-    "ImagePath": "/img/stone-effect-vinyl.jpg",
+    "ImagePath": "https://image.made-in-china.com/202f0j00AWDkuKzBSFcv/Natural-Stone-Tile-Effect-Kitchen-Flooring-Bathroom-Flooring-High-Glossy-Laminate-Flooring.webp",
     "Description": "Vinyl flooring with a natural stone effect, great for outdoor and indoor use.",
     "Price": 26.00,
     "StockQuantity": 220,
@@ -73,7 +73,7 @@
   },
   {
     "Name": "Rustic Oak Engineered",
-    "ImagePath": "/img/rustic-oak.jpg",
+    "ImagePath": "https://www.woodfloorsdirect.co.uk/wp-content/uploads/2021/08/5G_Click_Engineered_European_Oak_Flooring_Lacquer_Family_01_retail.jpg",
     "Description": "Rustic oak engineered flooring with a textured surface for a traditional feel.",
     "Price": 39.00,
     "StockQuantity": 130,
