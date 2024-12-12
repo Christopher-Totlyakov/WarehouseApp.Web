@@ -43,7 +43,7 @@ namespace WarehouseApp.Web.Controllers
 		{
 			var orderDetails = await orderService.GetOrderDetailsAsync(id);
 
-			if (orderDetails == null)
+			if (orderDetails == null || orderDetails.SupplierName != User.Identity?.Name)
 			{
 				TempData[ErrorMessage] = "Details Failed";
 				return NotFound();

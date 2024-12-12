@@ -78,5 +78,85 @@
     "Price": 39.00,
     "StockQuantity": 130,
     "SoftDelete": false
+  },
+  {
+    "Name": "Smoked Oak Laminate",
+    "ImagePath": "https://floorgiants.co.uk/media/catalog/product/cache/52c4f84af4127124700a96070ed9518e/i/m/image_14.webp",
+    "Description": "Elegant smoked oak laminate flooring with a matte finish, ideal for cozy interiors.",
+    "Price": 24.50,
+    "StockQuantity": 180,
+    "SoftDelete": false
+  },
+  {
+    "Name": "Classic Pine Vinyl",
+    "ImagePath": "https://cdn-01.abc-parkett24.de//media/2d/e6/0e/1707212449/gallery-opti-tarkett-12032021-24524065-scene_bedroom1-rotation_0.jpg?width=2000",
+    "Description": "Affordable pine-effect vinyl flooring, offering a rustic charm to any space.",
+    "Price": 16.99,
+    "StockQuantity": 320,
+    "SoftDelete": false
+  },
+  {
+    "Name": "Ash Hardwood",
+    "ImagePath": "https://images.squarespace-cdn.com/content/v1/5384c1abe4b09192d2a9336d/1611610040892-LNCEY187VW0NZX9MAQMO/Nat+Mt+Ash+Dining+Room.jpg?format=1500w",
+    "Description": "Premium ash hardwood flooring with a smooth texture and natural look.",
+    "Price": 55.00,
+    "StockQuantity": 85,
+    "SoftDelete": false
+  },
+  {
+    "Name": "White Oak Parquet",
+    "ImagePath": "https://admflooring.com/wp-content/uploads/2022/09/Sunset-1-3.jpg",
+    "Description": "Stunning white oak parquet flooring, perfect for luxurious and modern interiors.",
+    "Price": 48.50,
+    "StockQuantity": 110,
+    "SoftDelete": false
+  },
+  {
+    "Name": "Black Marble Vinyl",
+    "ImagePath": "https://i8.amplience.net/i/flooranddecor/100844141_context?fmt=auto&qlt=85",
+    "Description": "Sophisticated black marble-effect vinyl flooring, adding elegance to kitchens and bathrooms.",
+    "Price": 34.99,
+    "StockQuantity": 190,
+    "SoftDelete": false
+  },
+  {
+    "Name": "Vintage Walnut Laminate",
+    "ImagePath": "https://www.parkettkaiser.de/media/catalog/product/m/e/meister-laminat-ll-150-vintage-walnut-6845-6036006845_r13.jpg?width=800&height=700&store=eu-en&image-type=image",
+    "Description": "Retro walnut laminate flooring with a textured finish, perfect for nostalgic designs.",
+    "Price": 27.00,
+    "StockQuantity": 150,
+    "SoftDelete": false
+  },
+  {
+    "Name": "Pebble Stone Vinyl",
+    "ImagePath": "https://www.tenstickers.com/webp/vinylrugs/large/sea-pebbles-floor-stone-floor-tiles-27756.webp",
+    "Description": "Vinyl flooring with a pebble stone design, offering durability and a natural look.",
+    "Price": 21.50,
+    "StockQuantity": 270,
+    "SoftDelete": false
+  },
+  {
+    "Name": "Cedar Engineered Wood",
+    "ImagePath": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4XNNIXVvahct9y-BxSUldYGGlNf13puuv_Q&s",
+    "Description": "Warm cedar engineered wood flooring, creating a cozy and inviting atmosphere.",
+    "Price": 47.00,
+    "StockQuantity": 120,
+    "SoftDelete": false
+  },
+  {
+    "Name": "Silver Birch Vinyl",
+    "ImagePath": "https://5.imimg.com/data5/SELLER/Default/2021/11/ML/SA/TO/26851852/vinyl-flooring-500x500.jpg",
+    "Description": "Modern silver birch vinyl flooring with a soft texture and versatile look.",
+    "Price": 19.99,
+    "StockQuantity": 300,
+    "SoftDelete": false
+  },
+  {
+    "Name": "Golden Hickory Laminate",
+    "ImagePath": "https://www.selectcarpetandfloor.com/wp-content/uploads/2020/02/SL426_02005_ROOM.jpg",
+    "Description": "Bright golden hickory laminate flooring, ideal for creating a sunny and warm space.",
+    "Price": 23.99,
+    "StockQuantity": 210,
+    "SoftDelete": false
   }
 ]
