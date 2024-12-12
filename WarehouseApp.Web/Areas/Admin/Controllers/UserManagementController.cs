@@ -72,7 +72,6 @@ namespace WarehouseApp.Web.Areas.Admin.Controllers
 
             await userService.ChangeAccountAsync(id);
 
-			TempData[SuccessMessage] = "Successfully Activate Account";
 			return RedirectToAction(nameof(Index));
         }
 
@@ -87,7 +86,6 @@ namespace WarehouseApp.Web.Areas.Admin.Controllers
             await userService.ChangeAccountAsync(id);
 
 
-			TempData[SuccessMessage] = "Successfully Deactivate Account";
 			return RedirectToAction(nameof(Index));
         }
     }

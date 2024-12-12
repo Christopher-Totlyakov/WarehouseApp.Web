@@ -53,8 +53,12 @@ namespace WarehouseApp.Services.Data
         }
         public async Task<UserDetailsViewModel> GetUserByIdAsync(string userId)
         {
-            var id = Guid.Parse(userId);
-            var user = await userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
+			Guid id;
+			if (!Guid.TryParse(userId, out id))
+			{
+				return null!;
+			}
+			var user = await userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
             if (user == null)
             {
                 return null!;
@@ -105,8 +109,12 @@ namespace WarehouseApp.Services.Data
         public async Task<bool> DeletePersonalDataAsync(string userId)
         {
 
-            var id = Guid.Parse(userId);
-            var user = await this.userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
+			Guid id;
+			if (!Guid.TryParse(userId, out id))
+			{
+				return false;
+			}
+			var user = await this.userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
             if (user == null)
             {
                 return false;
@@ -152,8 +160,12 @@ namespace WarehouseApp.Services.Data
 
         public async Task ChangeAccountAsync(string userId)
         {
-            var id = Guid.Parse(userId);
-            var user = await this.userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
+			Guid id;
+            if (!Guid.TryParse(userId, out id))
+            {
+                return;
+            }
+				var user = await this.userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
             if (user == null)
             {
                 return;
