@@ -36,4 +36,11 @@
     <Folder Include="Areas\Admin\Views\Shared\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Shared\500.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

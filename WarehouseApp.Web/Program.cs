@@ -127,10 +127,16 @@ app.Map("/Error/{statusCode}", async context =>
     var httpContextAccessor = context.RequestServices.GetRequiredService<IHttpContextAccessor>();
     var actionContext = new ActionContext(context, new RouteData(), new Microsoft.AspNetCore.Mvc.Abstractions.ActionDescriptor());
 
-    if (statusCode == "404" || statusCode == "403")
-    {
-        var viewName = statusCode == "404" ? "404" : "403";
-        var result = factory.FindView(actionContext, viewName, false);
+	if (statusCode == "404" || statusCode == "403" || statusCode == "500")
+	{
+		var viewName = statusCode switch
+		{
+			"404" => "404",
+			"403" => "403",
+			"500" => "500",
+			_ => "404" // Default view name for unknown cases (optional)
+        };
+		var result = factory.FindView(actionContext, viewName, false);
 
         if (result.View != null)
         {
@@ -153,7 +159,7 @@ app.Map("/Error/{statusCode}", async context =>
         }
         else
         {
-            await context.Response.WriteAsync($"{statusCode} - Page Not Found");
+            await context.Response.WriteAsync($"{statusCode} - An error occurred.");
         }
     }
     else
