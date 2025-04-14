@@ -43,10 +43,3 @@ jobs:
 
       - name: Run tests
         run: dotnet test ./WarehouseApp.Services.Tests/WarehouseApp.Services.Tests.csproj --no-build --configuration Release --logger "trx" --collect:"XPlat Code Coverage"
-
-      - name: Upload test results
-        if: success() || failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: '**/TestResults/*.trx'
