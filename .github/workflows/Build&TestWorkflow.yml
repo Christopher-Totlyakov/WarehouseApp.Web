@@ -42,4 +42,4 @@ jobs:
         run: dotnet restore
 
       - name: Run tests
-        run: dotnet test ./WarehouseApp.Services.Tests/WarehouseApp.Services.Tests.csproj --no-build --configuration Release --logger "trx" --collect:"XPlat Code Coverage"
+        run: dotnet test WarehouseApp.Web.sln --configuration Release --logger "trx" --collect:"XPlat Code Coverage"
